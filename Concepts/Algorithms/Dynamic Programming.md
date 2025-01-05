@@ -34,6 +34,9 @@ Dynamic programming
 ?
 - Breaking down problem into sub-problems, solving smaller sub-problems, and caching results of smaller sub-problems
 	- Commonly used for searching all possible solutions
+	- Note that given a parameter spanning `[0, n]`, if only a subset of `[0, n]` is relevant for the parameter, then create that subset and use the subset index as DP parameters 
+		- Instead of `dp(a, b), where a, b in [0, 1, 2, ..., 99, 100]`
+		- Do `dp(a_i, b_i), where a_i, b_i in [0, 5], indexing into [0, 5, 8, 100]`
 - Big O
 	- Time/Space scale by dimensions
 		- 1-D DP $\to O(n)$
