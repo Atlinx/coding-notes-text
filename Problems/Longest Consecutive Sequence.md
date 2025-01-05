@@ -1,5 +1,5 @@
 # Longest Consecutive Sequence
-#problem
+#problem #hashing
 https://leetcode.com/problems/longest-consecutive-sequence/description/
 
 Given an unsorted array of integers `nums`, return _the length of the longest consecutive elements sequence._
