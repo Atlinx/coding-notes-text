@@ -10,6 +10,7 @@ Algorithms are a sequence of steps to follow to solve a problem. For example, so
 	- [[Find Subsets]]
 	- [[Find Combinations]]
 	- [[Find Permutations]]
+	- [[Binary Search]]
 - **Graph**
 	- [[Breadth First Search]]
 	- [[Depth First Search]]
