@@ -13,3 +13,4 @@ Kth Smallest Integer in BST
 	- In in-order traversal, decrement `k`
 	- We essentially explore the left sub-tree first, then the node itself, and then the right sub-tree
 		- `k` is a `nonlocal` variable, so it's accessible from all DFS calls
+<!--SR:!2025-01-10,3,250-->

@@ -120,4 +120,4 @@ Union find
 		- Find $\to O(\log n), O(\alpha(1))$
 			- $\alpha(1) \to$ Inverse Ackermann function, which can be treated as constant time
 				- Result of path compression
-<!--SR:!2025-01-05,3,250-->
+<!--SR:!2025-01-09,2,230-->

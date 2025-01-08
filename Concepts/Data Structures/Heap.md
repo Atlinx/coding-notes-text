@@ -20,4 +20,4 @@ Heap
 	- Binary heap
 	- Binary indexed heap
 	- Fibonacci heap
-<!--SR:!2025-01-05,3,250-->
+<!--SR:!2025-01-14,7,250-->

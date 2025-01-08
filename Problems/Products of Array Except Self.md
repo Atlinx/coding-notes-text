@@ -25,7 +25,8 @@ Products of array except self
 			- First element is 1, so we "offset" the array right
 		- `suffix` array = Cumulative product from right $\to$ left
 			- Last element is 1, so we "offset" the array left
-	- `answer[i] = prefix[i] * suffix[i]` 
+	- `answer[i] = prefix[i] * suffix[i]`
 		- `prefix[i]` = product to left of `i`
 		- `suffix[i]` = product to right of `i`
 	- Can further optimize by doing it all within the answer array
+<!--SR:!2025-01-11,3,250-->

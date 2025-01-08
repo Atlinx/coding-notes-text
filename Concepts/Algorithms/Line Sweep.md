@@ -48,11 +48,27 @@ print(f"res: {res}")
 #           input: [2, 4, 5, 6,  1]
 # expected output: [1, 3, 3, -1, 3]
 ```
+## Big O
+Let $n$ = number of intervals and $q$ = number of distinct queries
+- Space
+	- $O(n)$
+		- Store all intervals in interval heap
+- Time
+	- $O(q + n \log n)$
+		- Every interval is added to the heap ($\log n$) and removed from the heap ($\log n$) once, therefore $O(n \cdot 2 \log n) = O(n \log n)$
+		- Assuming we have sorted intervals and queries, otherwise we'd need
+			- $O(q \log q + n \log n)$ to account for the sorting of the queries and intervals
 # Flashcards
 #flashcards/algorithms 
 
 Line sweep algorithm
 ?
+- Big O
+	- Let $n$ = number of intervals and $q$ = number of distinct queries
+	- Time $\to O(q + n \log n)$
+		- Every interval is added to the heap ($\log n$) and removed from the heap ($\log n$) once, therefore $O(n \cdot 2 \log n) = O(n \log n)$
+	- Space $\to O(n)$
+		- Store all intervals in interval heap
 - `intervals: list[(start, end, value)]` $\to$ sorted intervals
 - `queries: list[point]` $\to$ sorted distinct queries
 - `i = 0` $\to$ last processed interval
@@ -63,4 +79,4 @@ Line sweep algorithm
 	- While `int_end_heap[0].end > q` $\to$ ensure top of heap is an interval that hasn't ended
 		- `int_end_heap.pop()`
 	- `int_end_heap[0].value` = answer for query `q`
-<!--SR:!2025-01-08,2,230-->
+<!--SR:!2025-01-13,5,230-->

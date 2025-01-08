@@ -164,7 +164,6 @@ Let $n$ = size of array
 			- Traverse depth of tree in worst case
 		- At most 2 nodes are expanded (split into two calls) at every level
 			- Therefore there are at most 2 branched searches, and the number of branches does not exponentially grow
-
 # Flashcards
 #flashcards/data-structures
 
@@ -194,3 +193,4 @@ Segment tree
 			- Move left
 		- Else
 			- Split into two searches from `start to mid`, and from `mid + 1 to end`
+<!--SR:!2025-01-10,3,250-->

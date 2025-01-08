@@ -35,7 +35,7 @@ Car Fleet
 - Iteration
 	- Big O
 		- Time $\to O(n \log n)$
-		- Space $\to O(n)$
+		- Space $\to O(1)$
 	- Time car arrives at destination determines car groupings
 	- `fleets` = 1
 	- `prev_time` = time of last car
@@ -45,3 +45,4 @@ Car Fleet
 			- `t = d / r`
 			- `t = (dest - start) / speed`
 		- If  `curr_time > prev_time`, then update `prev_time` and add a new fleet
+<!--SR:!2025-01-09,1,230-->

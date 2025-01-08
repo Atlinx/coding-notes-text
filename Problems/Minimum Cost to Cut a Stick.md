@@ -27,12 +27,14 @@ Minimum Cost to Cut a Stick
 - Return _the minimum total cost_ of the cuts.
 ?
 - Dynamic programming
-	- Big OA
-		- Time $\to O(n^2)$
+	- Big O
+		- Let $m$ = number of cuts
+		- Time $\to O(m^2)$
 			- Iterate over solutions, and for each solution iterate over cuts
 			- Cuts has small bounds < 100, therefore can be treated as fixed
-		- Space $\to O(n^2)$
+		- Space $\to O(m^2)$
 	- Sub-problem $\to$ minimum cost to cut stick from `a` to `b`
 		- `edges = [0] + sorted(cuts) + [n]`
 		- `cache` maps `[a, b] -> min_cost`
 		- Note that range of `a, b` spans `edges`, rather than the entire `[0, n]`
+<!--SR:!2025-01-11,3,250-->

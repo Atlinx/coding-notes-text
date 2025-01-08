@@ -18,11 +18,12 @@ Maximum Product Subarray
 - Sliding window (Specifically, Kadane's algorithm)
 	- Big O
 		- Time $\to O(n)$
-		- Space $\to O(n)$
+		- Space $\to O(1)$
 	- Track min and max product of current index
-		- Every `i`, min and max product must end at current index, which creates three transition possibilities
+		- Every `i`, min an dmax product must end at current index, which creates three transition possibilities
 			- From max product, `max_p * i`
 			- From min product, `min_p * i`
 			- From itself, `i`
 		- `min_p = min(max_p * i, min_p * i, i)`
 		- `max_p = max(max_p * i, min_p * i, i)`
+<!--SR:!2025-01-11,3,250-->

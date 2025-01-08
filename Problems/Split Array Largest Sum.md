@@ -31,9 +31,12 @@ Split Array Largest Sum
 - A **subarray** is a contiguous part of the array.
 ?
 - Binary search
-	- `lo` = min sum possible = `min(nums)` 
+	- Big O
+		- Time $\to O(n \log ( \text{hi} - \text{lo}))$
+		- Space $\to O(1)$
+	- `lo` = min sum possible = `min(nums)`
 	- `hi` = max sum possible = `max(nums)`
-	- Binary search through solution space to find a solution that uses exactly `k` partitions
+	- Binary search through solution space *to* find a solution that uses exactly `k` partitions
 		- `mid = (lo + hi) // 2`
 		- `min_partitions = minRequiredPartitions(arr, max_sum)`
 			- `total = partitions = 0`
@@ -46,3 +49,4 @@ Split Array Largest Sum
 			- Lower partitions by raising `max_sum` $\to$ increase `lo` to `mid`
 		- Else
 			- Increase partitions by lowering `max_sum` $\to$ lower `hi` to `mid`
+<!--SR:!2025-01-10,3,250-->

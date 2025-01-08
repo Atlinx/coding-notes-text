@@ -26,3 +26,4 @@ Container with Most Water
 		- Space $\to O(1)$
 	- Move the shorter of the left and right pointers, until they overlap
 	- Aggregate `max_area` over the iteration
+<!--SR:!2025-01-11,4,270-->

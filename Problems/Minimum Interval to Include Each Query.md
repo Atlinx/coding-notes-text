@@ -14,10 +14,14 @@ Note: The length of an interval is calculated as `right_i - left_i + 1`.
 #flashcards/problems 
 
 Minimum Interval to Include Each Query
+- You are given a 2D integer array `intervals`, where `intervals[i] = [left_i, right_i]` represents the `ith` interval starting at `left_i` and ending at `right_i` **(inclusive)**.
+- You are also given an integer array of query points `queries`. The result of `query[j]` is the **length of the shortest interval** `i` such that `left_i <= queries[j] <= right_i`. If no such interval exists, the result of this query is `-1`.
+- Return an array `output` where `output[j]` is the result of `query[j]`.
+- Note: The length of an interval is calculated as `right_i - left_i + 1`.
 ?
 - Line sweep
 	- Big O
-		- Time $\to O(q \log n)$
+		- Time $\to O(q \log n + n \log n)$
 		- Space $\to O(n)$
 		- where
 			- $q$ = number of queries
@@ -31,3 +35,4 @@ Minimum Interval to Include Each Query
 		- While `min_end_heap[0].end` is before `q`
 			- Pop heap
 		- Top of `min_end_heap` is answer to `q`
+<!--SR:!2025-01-11,3,250-->

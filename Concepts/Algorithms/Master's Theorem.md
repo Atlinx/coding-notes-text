@@ -40,4 +40,4 @@ Master's theorem
 - $a$ = recursive calls per iteration
 - $b$ = sub-problem shrinkage factor
 - $k$ = polynomial factor that represents the cost to combine the work done by the sub-problems
-<!--SR:!2025-01-08,1,230-->
+<!--SR:!2025-01-10,2,230-->

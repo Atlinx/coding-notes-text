@@ -157,8 +157,10 @@ Reconstruct flight path
 ?
 - [[Hierholzer Algorithm|Hierholzer's algorithm]]
 	- Big O
-		- Time $\to O(n)$
-		- Space $\to O(1)$
+		- Let $V$ = number of cities, $E$ = number of flight tickets
+		- Time $\to O(V + E)$
+		- Space $\to O(V)$
 	- Because we're given an Eulerian graph
 	- DFS down "JFK", and in post order, add elements to array
 	- Reverse array and return
+<!--SR:!2025-01-11,3,250-->

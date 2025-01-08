@@ -26,6 +26,7 @@ Largest Rectangle in Histogram
 	- Iterate over `heights`, `i`
 		- While head of stack's height > `heights[i]`
 			- Pop stack and calculate area, as `popped_height * (i - popped_index)`
-			- Set `start = popped_index` 
+			- Set `start = popped_index`
 		- Push `(start, h)` into stack
 	- Parse area of remaining portion of stack
+<!--SR:!2025-01-11,3,250-->
