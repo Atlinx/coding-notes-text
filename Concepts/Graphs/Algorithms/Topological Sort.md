@@ -62,7 +62,8 @@ print(f"topo_sort B: {topo_sort(B_adj)}")
 ## Big O
 Let $V$ = number of vertices in graph, $E$ = number of edges in graph
 - Space
-	- $O(1)$
+	- $O(V)$
+		- Call stack
 - Time
 	- $O(V + E)$
 		- We visit every vertex and edge once in our DFS search
@@ -74,8 +75,9 @@ Topological Sort
 ?
 - Big O
 	- Time $\to O(V + E)$
-	- Space $\to O(1)$
+	- Space $\to O(V)$
 - Finds ordering of nodes in DAG such that all edges point in same direction
 - Implementation
 	- DFS graph in post-order, and add to result array
 	- Return reversed result array
+<!--SR:!2025-01-10,3,250-->

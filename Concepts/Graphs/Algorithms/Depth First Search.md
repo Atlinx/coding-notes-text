@@ -148,7 +148,7 @@ Let $V$ = number of vertices in graph, $E$ = number of edges in graph
 	- $O(V + E)$
 		- You traverse through every edge and vertex in the tree
 - Space
-	- $O(d)$
+	- $O(V)$
 		- Call stack is maximum depth of the tree, because that's the farthest you'll traverse
 
 # Flashcards
@@ -160,7 +160,7 @@ Depth first search
 	- Time $\to O(V + E)$
 	- Space $\to O(V)$
 - Go as deep as possible through one child before checking other children
-<!--SR:!2025-01-04,3,250-->
+<!--SR:!2025-01-14,7,250-->
 
 Depth first search: Recursive
 ?
@@ -170,6 +170,7 @@ Depth first search: Recursive
 	- `dfs(left), visit(), dfs(right)`
 - Post order
 	- `dfs(left), dfs(right), visit()`
+<!--SR:!2025-01-10,3,250-->
 
 Depth first search: Iterative
 ?
@@ -189,3 +190,4 @@ Depth first search: Iterative
 			- If `curr_visited`
 				- `visit()`
 			- Else, add `curr, curr.right, curr.left` to `stack` and `visited`, and mark `curr` as visited
+<!--SR:!2025-01-10,3,250-->

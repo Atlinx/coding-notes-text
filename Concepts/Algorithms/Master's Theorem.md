@@ -35,17 +35,9 @@ Explanation
 
 Master's theorem
 ?
-$$
-\huge \begin{aligned} \\
-T(n) &= a T\left( \frac{n}{b} \right) + O(n^k) \\
-T(1) &= c \\ \\
-
-T(n) &\in \Theta(n^k) &\text{if } \log_{b} a < k \\
-T(n) &\in \Theta(n^k\log n) &\text{if } \log_{b} a = k \\
-T(n) &\in \Theta(n^{\log_{b} a}) &\text{if } \log_{b} a > k \\
-\end{aligned}
-$$
+- $$\huge \begin{aligned} \\T(n) &= a T\left( \frac{n}{b} \right) + O(n^k) \\T(1) &= c \\ \\T(n) &\in \Theta(n^k) &\text{if } \log_{b} a < k \\T(n) &\in \Theta(n^k\log n) &\text{if } \log_{b} a = k \\T(n) &\in \Theta(n^{\log_{b} a}) &\text{if } \log_{b} a > k \\\end{aligned}$$
 - Recurrence relation
 - $a$ = recursive calls per iteration
 - $b$ = sub-problem shrinkage factor
 - $k$ = polynomial factor that represents the cost to combine the work done by the sub-problems
+<!--SR:!2025-01-08,1,230-->
