@@ -50,15 +50,15 @@ Let $V$ = number of vertices in graph, $E$ = number of edges in graph
 - Space
 	- $O(1)$
 - Time
-	- $O(V + E)$
-		- We visit every vertex and edge once
+	- $O(n)$
+		- We visit every node
 # Flashcards
 #flashcards/algorithms 
 
 Tortoise Hare Algorithm
 ?
 - Big O
-	- Time $\to O(V + E)$
+	- Time $\to O(n)$
 	- Space $\to O(1)$
 - Finds a cycle in a linked list with $O(1)$ space
 - Implementation
@@ -67,4 +67,4 @@ Tortoise Hare Algorithm
 		- Move `slow` forward 1 node
 		- Move `fast` forward 2 nodes
 		- If `slow == fast`, then cycle occurred
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-20,9,250-->

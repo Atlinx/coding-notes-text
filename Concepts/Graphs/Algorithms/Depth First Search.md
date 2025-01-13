@@ -170,7 +170,7 @@ Depth first search: Recursive
 	- `dfs(left), visit(), dfs(right)`
 - Post order
 	- `dfs(left), dfs(right), visit()`
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-20,8,250-->
 
 Depth first search: Iterative
 ?
@@ -190,4 +190,4 @@ Depth first search: Iterative
 			- If `curr_visited`
 				- `visit()`
 			- Else, add `curr, curr.right, curr.left` to `stack` and `visited`, and mark `curr` as visited
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-21,9,250-->

@@ -34,4 +34,4 @@ Detect Squares
 			- Calculate remaining square points
 			- Query `count_dict` for counts
 			- `combos += point_1_counts * point_2_counts * point_3_counts`
-<!--SR:!2025-01-11,3,250-->
+<!--SR:!2025-01-20,8,250-->

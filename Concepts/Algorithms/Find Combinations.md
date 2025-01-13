@@ -116,7 +116,7 @@ Find combinations - 2 approaches
 - Two approaches
 	- Subset
 	- Combinatoric
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-19,7,250-->
 
 Find combinations: Subset approach
 ?
@@ -129,7 +129,7 @@ Find combinations: Subset approach
 		- If `len(temp) == k`, add `temp` to results
 		- Try including `arr[i]`, `dfs(i + 1)`
 		- Try excluding `arr[i]` and move past duplicates, then `dfs(i)`
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-19,7,250-->
 
 Find combinations: Combinatoric (distinct) approach
 ?
@@ -142,4 +142,4 @@ Find combinations: Combinatoric (distinct) approach
 		- If `len(temp) == k`, add `temp` to results
 		- Choose number `j` from `[i, n]`
 			- `dfs(j + 1)`
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-13,1,230-->

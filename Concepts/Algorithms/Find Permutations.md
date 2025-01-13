@@ -47,7 +47,7 @@ def permutes(arr):
 		for i in range(len(res) - 1, -1, -1): # O(n!) -> scales by # perms
 			perm = res.pop()
 			for j in range(len(perm) + 1): # O(n)
-				copy = list(perm)
+				copy = list(perm)          # O(n)
 				copy.insert(j, elem)
 				new_res.append(copy)
 		res = new_res
@@ -77,15 +77,21 @@ Find permutations
 - Two types
 	- All subsets perms $\to$ read from `res`, make copy, insert, and append
 		- Big O
-			- Time $\to O(n^2 \cdot \sum\limits_{i = 0}^n i! \cdot {n \choose i})$
-				- For each perm ($\sum\limits_{i = 0}^n i! \cdot {n \choose i}$), we insert elements individually to build the permutation ($n$), and before inserting an element, we always make a copy of the perm ($n$)
+			- Time $\to O(n^3 \cdot \sum\limits_{i = 0}^n i! \cdot {n \choose i})$
+				- We iterate each element in the array ($n$)
+				- We iterate over existing results ($\sum\limits_{i = 0}^n i! \cdot {n \choose i}$)
+				- We iterate over possible slots ($n$)
+				- We make a copy of the current result ($n$), insert the element into the corresponding slot, and insert the copy back into the results array
 			- Space $\to O\left( \sum\limits_{i = 0}^n i! \cdot {n \choose i} \right)$
 				- Not important to memorize exact formula, just reasoning
 				- We find permutations of every possible subset of `arr`
 	- All perms $\to$ remove from `res`, make copy, insert, and append
 		- Big O
-			- Time $\to O(n^2 \cdot n!)$
-				- For each perm ($n!$), we insert elements individually to build the permutation ($n$), and before inserting an element, we always make a copy of the perm ($n$)
+			- Time $\to O(n^3 \cdot n!)$
+				- We iterate each element in the array ($n$)
+				- We iterate over existing results ($n!$)
+				- We iterate over possible slots ($n$)
+				- We make a copy of the current result ($n$), insert the element into the corresponding slot, and insert the copy back into the results array
 			- Space $\to O\left( \sum\limits_{i = 0}^n i! \cdot {n \choose i} \right)$
 				- We find permutations of every possible subset of `arr`
 - Implementation
@@ -94,4 +100,4 @@ Find permutations
 		- Iterate `res`, `r`
 			- Iterate insertion slots in `r`
 				- Make copy of `r` and insert `a` into slot
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-15,3,250-->

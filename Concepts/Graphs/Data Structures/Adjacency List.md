@@ -89,4 +89,4 @@ Adjacency list
 	- Time
 		- Lookup edge $\to O(E)$
 		- Add/remove edge $\to O(E)$
-<!--SR:!2025-01-09,2,230-->
+<!--SR:!2025-01-14,2,210-->

@@ -35,4 +35,4 @@ Minimum Interval to Include Each Query
 		- While `min_end_heap[0].end` is before `q`
 			- Pop heap
 		- Top of `min_end_heap` is answer to `q`
-<!--SR:!2025-01-11,3,250-->
+<!--SR:!2025-01-14,2,230-->

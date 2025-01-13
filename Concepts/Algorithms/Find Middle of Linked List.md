@@ -52,10 +52,10 @@ Find middle of linked list
 ?
 - Big O
 	- Time $\to O(n)$
-	- Space $\to O()$
+	- Space $\to O(1)$
 - Tortoise Hare algorithm
 	- Start `slow` and `fast` pointers at root
 	- Move `slow` pointer 1 node at a time
 	- Move `fast` pointer 2 nodes at a time
 	- If `slow == fast`
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-20,8,250-->

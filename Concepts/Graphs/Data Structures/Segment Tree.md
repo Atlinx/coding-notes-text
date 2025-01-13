@@ -193,4 +193,4 @@ Segment tree
 			- Move left
 		- Else
 			- Split into two searches from `start to mid`, and from `mid + 1 to end`
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-19,7,250-->

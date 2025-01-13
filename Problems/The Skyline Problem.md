@@ -18,6 +18,7 @@ The **skyline** should be represented as a list of "key points" **sorted by t
 
 ![[Pasted image 20250101113102.jpg]]
 # Flashcards
+#flashcards/problems 
 
 The Skyline Problem
 - A city's **skyline** is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Given the locations and heights of all the buildings, return _the **skyline** formed by these buildings collectively_.
@@ -37,3 +38,4 @@ The Skyline Problem
 		- While `max_height_heap[0].end` is before `e`
 			- Pop heap
 		- If height of the top of `max_height_heap` changed, then add it to skyline
+<!--SR:!2025-01-21,9,250-->

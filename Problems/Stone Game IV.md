@@ -21,8 +21,10 @@ Stone Game IV
 ?
 - 1-D Dynamic programming
 	- Big O
-		- Time $\to O(n)$
+		- Time $\to O(n \cdot \sqrt{ n })$
+			- There are $\sqrt{ n }$ perfect squares under $n$
+			- For each case ($n$ total), we want to iterate over the number of perfect squares ($\sqrt{ n }$ in worst case given $n$ stones)
 		- Space $\to O(n)$
 	- Subproblem $\to$ At a given n, does current player win the game?
 	- Note that we don't need to have another axis for the player (Alice/Bob), because the game is symmetric
-<!--SR:!2025-01-10,3,250-->
+<!--SR:!2025-01-20,8,250-->
