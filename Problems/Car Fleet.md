@@ -45,4 +45,4 @@ Car Fleet
 			- `t = d / r`
 			- `t = (dest - start) / speed`
 		- If  `curr_time > prev_time`, then update `prev_time` and add a new fleet
-<!--SR:!2025-01-14,2,210-->
+<!--SR:!2025-01-18,4,210-->
