@@ -142,7 +142,7 @@ Binary search: Find left-most index
 	- else
 		- `lo = mid + 1`
 - Return `lo`
-<!--SR:!2025-01-15,3,250-->
+<!--SR:!2025-01-23,8,250-->
 
 Binary search: Find right-most index
 ?

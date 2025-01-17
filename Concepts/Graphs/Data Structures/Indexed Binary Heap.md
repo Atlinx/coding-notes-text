@@ -14,6 +14,9 @@ class MaxIndexHeap:
 				self.map[self.arr[i][0]] = i
 		self.heapify()
 
+	def __len__(self):
+		return len(self.arr)
+	
 	def __repr__(self):
 		return f"MinHeap: {self.arr} {self.map}"
 	
@@ -115,6 +118,8 @@ class MaxIndexHeap:
 			self.arr[0] = last_key_value
 			self.map[last_key_value[0]] = 0
 			self._sink(0)
+		else:
+			self.arr.pop()
 		return key_value
 
 	# Time: O(log n)

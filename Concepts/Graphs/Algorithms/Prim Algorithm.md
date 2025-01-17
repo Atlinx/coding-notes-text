@@ -116,6 +116,9 @@ class MaxIndexHeap:
 				self.map[self.arr[i][0]] = i
 		self.heapify()
 
+	def __len__(self):
+		return len(self.arr)
+	
 	def __repr__(self):
 		return f"MinHeap: {self.arr} {self.map}"
 	
@@ -428,7 +431,7 @@ Prim's algorithm
 		- Lazy $\to$ Insert all edges
 		- Eager $\to$ Updates entries
 	- Fibonacci heap $\to O(E + V \log V)$
-<!--SR:!2025-01-15,3,250-->
+<!--SR:!2025-01-17,2,230-->
 
 Prim's algorithm: Priority queue
 ?
@@ -439,7 +442,7 @@ Prim's algorithm: Priority queue
 - Eager $\to$ Update existing `min_heap` entry
 	- Pop $V$ vertices from `min_heap` of vertices, and push/update $E$ vertices
 	- $O(V \log V + E \log V)$
-<!--SR:!2025-01-15,8,250-->
+<!--SR:!2025-02-04,20,250-->
 
 Prim's algorithm: Array
 ?
@@ -448,4 +451,4 @@ Prim's algorithm: Array
 	- `vertex_array` $\to$ Min distance to next vertex
 	- `visited` $\to$ If vertex has been added to MST
 - For $V$ times, get next closest vertex from `vertex_array`, mark `visited`, then update `vertex_array` using neighbors of next closest vertex
-<!--SR:!2025-01-15,8,250-->
+<!--SR:!2025-02-03,19,250-->
