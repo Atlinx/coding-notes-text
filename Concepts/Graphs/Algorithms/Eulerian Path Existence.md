@@ -181,4 +181,4 @@ Eulerian path existence algorithm
 - Directed
 	- Balanced in/out degree $\to$ cycle
 	- Exactly one extra in and one extra out degree $\to$ path
-<!--SR:!2025-01-18,11,270-->
+<!--SR:!2025-02-17,30,270-->

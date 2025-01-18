@@ -31,7 +31,8 @@ Egg Drop With 2 Eggs and N Floors
 - DP
 	- Big O
 		- Time $\to O(n^2)$
-		- Space $\to O(n^2)$
+		- Space $\to O(n)$
+			- Technically $2n$ space
 	- Subproblem = `dfs(f, n) -> min moves`
 		- Let `f` = floor you want to drop first egg on
 		- Let `n` = number of floors
@@ -65,4 +66,4 @@ Egg Drop With 2 Eggs and N Floors
 	- Finally, we can use the quadratic formula to solve for $x$, taking care of only using the positive root solution, because we can't have a negative $x$ (min moves)
 	- Make sure to ceil the solution before returning because our final move may not necessarily land exactly on $n$, and may sometimes overshoot $n$
 		- However, our calculations try to find $x$ such that our final move lands exactly on $n$
-<!--SR:!2025-01-18,3,250-->
+<!--SR:!2025-01-25,7,250-->

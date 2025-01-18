@@ -431,7 +431,7 @@ Prim's algorithm
 		- Lazy $\to$ Insert all edges
 		- Eager $\to$ Updates entries
 	- Fibonacci heap $\to O(E + V \log V)$
-<!--SR:!2025-01-17,2,230-->
+<!--SR:!2025-01-19,1,210-->
 
 Prim's algorithm: Priority queue
 ?

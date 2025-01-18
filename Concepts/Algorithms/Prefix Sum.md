@@ -38,4 +38,4 @@ Prefix sum
 	- **NOTE:**
 		- Always prefer prefix sums over segment trees, since prefix sums provide $O(1)$ range queries while segment trees provide $O(\log n)$ range queries.
 		- If you need to update the array, then use segments trees because they take $O(\log n)$ to update, compared to $O(n)$ for prefix sums.
-<!--SR:!2025-01-17,3,250-->
+<!--SR:!2025-01-27,9,250-->

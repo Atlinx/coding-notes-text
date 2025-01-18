@@ -22,4 +22,4 @@ Best Time to Buy and Sell Stock
 		- Calculate current `profit = price - smallest_price`
 			- Keeping running `max_profit = max(max_profit, profit)`
 	- If `max_profit < 0`, then don't buy any stocks at all
-<!--SR:!2025-01-18,3,250-->
+<!--SR:!2025-01-27,9,250-->

@@ -358,15 +358,16 @@ Dijkstra's algorithm
 				- `prev[neigh] = node`
 				- `min_heap.push(neigh)`
 	- Find path $\to$ Start at destination, and then visit nodes backwards using `prev`
-- Implementations
-	- Priority queue $\to O(E \log V)$
+- Variations
+	- Binary heap $\to O(E \log V)$
 		- Lazy
 		- Eager
 	- D-ary $\to O(E \log_{E / V} V)$
-		- Dijkstra's algorithm tends to have more decrease key operations than pops 
+		- Dijkstra's algorithm tends to have more decrease key operations than pops
 		- Number of children per node is set to $\dfrac{E}{V}$ to make decrease key more efficient
 	- Fibonacci $\to O(E + V \log V)$
 		- Tends to have a large constant overhead in practice
+<!--SR:!2025-01-21,3,250-->
 
 Dijkstra's algorithm: Priority queue
 ?
@@ -374,3 +375,4 @@ Dijkstra's algorithm: Priority queue
 	- `min_heap` stores edges
 - Eager $\to O(E \log V + V \log V)$
 	- `min_heap` stores only vertices
+<!--SR:!2025-01-21,3,250-->
