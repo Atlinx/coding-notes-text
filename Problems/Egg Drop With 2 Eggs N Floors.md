@@ -47,7 +47,8 @@ Egg Drop With 2 Eggs and N Floors
 		- Space $\to O(1)$
 	- Let $x$ = minimum number of moves
 	- We focus on dropping first egg
-		- If first egg breaks, then remaining moves = number of remaining slots, because we can't afford to break the second egg
+		- If first egg breaks, then remaining moves = number of remaining slots, because we   
+		- can't afford to break the second egg
 	- 1st move $\to$ highest we can drop is at $x$
 		- If egg breaks, then we must check $[1, x - 1]$ using the second egg, which creates  $x - 1$ additional moves
 			- $1 + x - 1 = x$, we are still using minimum moves
