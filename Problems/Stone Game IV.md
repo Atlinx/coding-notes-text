@@ -27,4 +27,4 @@ Stone Game IV
 		- Space $\to O(n)$
 	- Subproblem $\to$ At a given n, does current player win the game?
 	- Note that we don't need to have another axis for the player (Alice/Bob), because the game is symmetric
-<!--SR:!2025-01-20,8,250-->
+<!--SR:!2025-02-10,21,250-->

@@ -170,7 +170,7 @@ Depth first search: Recursive
 	- `dfs(left), visit(), dfs(right)`
 - Post order
 	- `dfs(left), dfs(right), visit()`
-<!--SR:!2025-01-20,8,250-->
+<!--SR:!2025-02-10,21,250-->
 
 Depth first search: Iterative
 ?

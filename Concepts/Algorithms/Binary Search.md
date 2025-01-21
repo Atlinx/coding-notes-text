@@ -126,10 +126,10 @@ Binary search: Find index
 	- If `arr[mid] > target`
 		- `hi = mid - 1`
 	- else if `arr[mid] < target`
-		- `lo = hi + 1`
+		- `lo = mid + 1`
 	- else
 		- Return `mid`
-<!--SR:!2025-01-20,8,250-->
+<!--SR:!2025-02-08,19,250-->
 
 Binary search: Find left-most index
 ?
