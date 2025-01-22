@@ -38,4 +38,4 @@ The Skyline Problem
 		- While `max_height_heap[0].end` is before `e`
 			- Pop heap
 		- If height of the top of `max_height_heap` changed, then add it to skyline
-<!--SR:!2025-01-21,9,250-->
+<!--SR:!2025-02-14,23,250-->

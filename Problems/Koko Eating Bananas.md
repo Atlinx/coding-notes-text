@@ -32,4 +32,4 @@ Koko Eating Bananas
 	- If `mid_hours > hours` $\to$ increase speed
 	- Else $\to$ decrease speed
 	- Return `lo`
-<!--SR:!2025-01-21,3,250-->
+<!--SR:!2025-01-29,7,250-->

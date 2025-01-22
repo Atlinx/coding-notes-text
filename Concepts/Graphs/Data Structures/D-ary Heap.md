@@ -32,4 +32,4 @@ D-ary heap
 		- Push $\to O(\log_{D} n)$
 			- Pushing requires swimming
 	- Space $\to O(n)$
-<!--SR:!2025-01-21,3,250-->
+<!--SR:!2025-01-29,7,250-->

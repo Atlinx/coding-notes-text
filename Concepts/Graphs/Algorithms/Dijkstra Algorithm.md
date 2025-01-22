@@ -367,7 +367,7 @@ Dijkstra's algorithm
 		- Number of children per node is set to $\dfrac{E}{V}$ to make decrease key more efficient
 	- Fibonacci $\to O(E + V \log V)$
 		- Tends to have a large constant overhead in practice
-<!--SR:!2025-01-21,3,250-->
+<!--SR:!2025-01-23,2,230-->
 
 Dijkstra's algorithm: Priority queue
 ?
@@ -375,4 +375,4 @@ Dijkstra's algorithm: Priority queue
 	- `min_heap` stores edges
 - Eager $\to O(E \log V + V \log V)$
 	- `min_heap` stores only vertices
-<!--SR:!2025-01-21,3,250-->
+<!--SR:!2025-01-30,8,250-->

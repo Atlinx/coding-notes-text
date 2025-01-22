@@ -190,4 +190,4 @@ Depth first search: Iterative
 			- If `curr_visited`
 				- `visit()`
 			- Else, add `curr, curr.right, curr.left` to `stack` and `visited`, and mark `curr` as visited
-<!--SR:!2025-01-21,9,250-->
+<!--SR:!2025-02-15,24,250-->
