@@ -367,7 +367,7 @@ Dijkstra's algorithm
 		- Number of children per node is set to $\dfrac{E}{V}$ to make decrease key more efficient
 	- Fibonacci $\to O(E + V \log V)$
 		- Tends to have a large constant overhead in practice
-<!--SR:!2025-01-23,2,230-->
+<!--SR:!2025-01-25,1,210-->
 
 Dijkstra's algorithm: Priority queue
 ?
