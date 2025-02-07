@@ -326,11 +326,11 @@ $$
 	- $\sum_{i} \log p(x_{i})$ is a constant, because it does not depend on $\theta$
 		- We are interested in finding a $\theta$ that maximizes $p(D)$
 - Maximum likelihood estimation (MLE)
-	- $$\huge \theta^* \leftarrow \text{arg max}_{\theta} \log p(D) = \text{arg max}_{\theta} \sum_{i} \log p_{\theta}(y_{i} | x_{i})$$
-	- $\log p_{\theta}(y_{i} | x_{i})$ = likelihood
+	- $$\huge \begin{align} \theta^* &\leftarrow \arg\max_{\theta} p(D) \\ &= \arg\max_{\theta} \log p(D) \\&= \arg\max_{\theta} \sum_{i} \log p_{\theta}(y_{i} | x_{i}) \end{align}$$
+	- $\log p_{\theta}(y_{i} | x_{i})$ = likelihood of getting our current data set $D$
 	- We want to choose $\theta$ to maximize this likelihood
 - Negative log-likelihood (NLL)
-	- $$\huge \theta^* \leftarrow \text{arg min}_{\theta} -\sum_{i} \log p_{\theta}(y_{i} | x_{i})$$
+	- $$\huge \theta^* \leftarrow \arg\min_{\theta} -\sum_{i} \log p_{\theta}(y_{i} | x_{i})$$
 	- A version of MLE that has a negative number
 	- Optimization literature canonically formulates optimization problems as minimization problems
 	- This is our loss function!
