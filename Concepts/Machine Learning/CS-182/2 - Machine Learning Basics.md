@@ -15,7 +15,7 @@
 	- Agent learns from "positive/negative reinforcement"
 ## Supervised Learning
 ![[Pasted image 20250206190524.png]]
-- Given $D = \{(x_{1}, y_{1}), \dots, (x_{n}, y_{n})\}$
+- Given $\mathcal{D} = \{(x_{1}, y_{1}), \dots, (x_{n}, y_{n})\}$
 	- Training dataset
 	- $x$ -> input
 	- $y$ -> true label that corresponds to input $x$
@@ -93,7 +93,7 @@
 	- Encompasses all prediction/recognition models trained from ground truth data
 	- Multi-billion dollar/year industry
 	- Simple basic principles
-- Given $D = \{(x_{1}, y_{1}), (x_{2}, y_{2}), \dots\}$
+- Given $\mathcal{D} = \{(x_{1}, y_{1}), (x_{2}, y_{2}), \dots\}$
 	- Goal -> learn $f_{\theta(x)} \approx y$
 - Predict -> based on ...
 	- Category of object -> based on image
@@ -266,7 +266,7 @@ $$
 		- What is representation of function?
 		- What structure answers that why?
 	- Implementation -> "how?" -> optimizer
-		- How is that structure constructed to?
+		- How is that structure constructed to? 
 		- How you choose the "what" to answer the "why"
 	- *Bonus* -> on which GPU?
 		- More relevant for ML engineer
@@ -286,15 +286,15 @@ $$
 - Result -> $(x,y) \sim p(y|x) p(x) = p(x, y)$
 	- Using chain rule in probability, $p(x,y) = p(y|x) p(x)$
 	- Therefore, we can generate samples $(x,y)$ from the join distribution $p(x, y)$
-- Training set $D = \{(x_{1}, y_{1}), (x_{2}, y_{2}), \dots\}$
+- Training set $\mathcal{D} = \{(x_{1}, y_{1}), (x_{2}, y_{2}), \dots\}$
 - What is $p(D)$, the probability of getting our dataset?
 - **Key assumption** -> our data is independent and identically distributed (i.i.d)
 	- Independent -> every data-point $(x_{i}, y_{i})$ independent of each $(x_{j}, y_{j})$
 	- Identically distributed -> $(x_{i}, y_{i}) \sim p(x,y)$
 		- "All data-points $(x_{i}, y_{i})$ come from the same probability distribution of $p(x, y)$"
 - When $\text{i.i.d.:}$
-	- $$\huge p(D) = \prod_{i}p(x_{i}, y_{i}) = \prod_{i} p(x_{i}) p(y_{i} | x_{i})$$
-	- Probability of getting our data set $D$ is the probability of getting each point $p(x_{i}, y_{i})$ multiplied together
+	- $$\huge p(\mathcal{D}) = \prod_{i}p(x_{i}, y_{i}) = \prod_{i} p(x_{i}) p(y_{i} | x_{i})$$
+	- Probability of getting our data set $\mathcal{D}$ is the probability of getting each point $p(x_{i}, y_{i})$ multiplied together
 	- We can do this because we assume the each data point is independent from one another, and share the same probability distribution
 
 >[!note] Terminology
@@ -309,11 +309,11 @@ $$
 		- Data-points that appear more often in the population should appear more often in our sample
 			- It would be extremely unlikely for our sample to be filled with really rare data-points if we used random-sampling (which we must have used if we assume data points are $\text{i.i.d.}$)
 - Idea -> choose $\theta$ such that we maximize
-	- $$\huge p(D) = \prod_{i} p(x_{i}) p_{\theta}(y_{i} | x_{i})$$
+	- $$\huge p(\mathcal{D}) = \prod_{i} p(x_{i}) p_{\theta}(y_{i} | x_{i})$$
 	- Problem
 		- $p(x_{i})$ -> Multiplying together many numbers $\leq 1$
 		- We end up getting a number really close to $0$
-- $$\huge \begin{align}\log p(D) &= \sum_{i} \log p(x_{i}) + \log p_{\theta}(y_{i} | x_{i}) \\ &= \sum_{i} \log p_{\theta}(y_{i} | x_{i}) + \text{const} \\ &= \sum_{i} \log p_{\theta}(y_{i} | x_{i})\end{align}$$
+- $$\huge \begin{align}\log p(\mathcal{D}) &= \sum_{i} \log p(x_{i}) + \log p_{\theta}(y_{i} | x_{i}) \\ &= \sum_{i} \log p_{\theta}(y_{i} | x_{i}) + \text{const} \\ &= \sum_{i} \log p_{\theta}(y_{i} | x_{i})\end{align}$$
 	- Take logarithm of both sides of $p(D)$ equation
 		- Choosing $\theta$ to maximize $\log p(D) =$ Choosing $\theta$ to maximize $p(D)$
 			- $\log(x)$ is monotonically increasing, and maps $(-\infty, \infty)$ to $[0, \infty)$ 
@@ -325,13 +325,19 @@ $$
 		- Product inside of logarithms can be simplifies to a summation
 	- $\sum_{i} \log p(x_{i})$ is a constant, because it does not depend on $\theta$
 		- We are interested in finding a $\theta$ that maximizes $p(D)$
-- Maximum likelihood estimation (MLE)
-	- $$\huge \begin{align} \theta^* &\leftarrow \arg\max_{\theta} p(D) \\ &= \arg\max_{\theta} \log p(D) \\&= \arg\max_{\theta} \sum_{i} \log p_{\theta}(y_{i} | x_{i}) \end{align}$$
+	- Problem solved -> Numbers close to zero are mapped to large negative numbers
+		- $e^-100 \approx 0.0000000 \dots 00000001$
+		- $\log 1e^-100 = -100$
+- Maximum likelihood estimation (MLE) ^maximum-log-likelihood
+	- $$\huge \begin{align} \theta^* &\leftarrow \arg\max_{\theta} p(\mathcal{D}) \\ &= \arg\max_{\theta} \log p(\mathcal{D}) \\&= \arg\max_{\theta} \sum_{i} \log p_{\theta}(y_{i} | x_{i}) \end{align}$$
 	- $\log p_{\theta}(y_{i} | x_{i})$ = likelihood of getting our current data set $D$
 	- We want to choose $\theta$ to maximize this likelihood
-- Negative log-likelihood (NLL)
+- Negative log-likelihood (NLL) ^negative-log-likelihood
 	- $$\huge \theta^* \leftarrow \arg\min_{\theta} -\sum_{i} \log p_{\theta}(y_{i} | x_{i})$$
 	- A version of MLE that has a negative number
+	- We avoid working with very small numbers -> Numbers close to zero are mapped to large negative numbers
+		- $e^-100 \approx 0.0000000 \dots 00000001$
+		- $\log 1e^-100 = -100$
 	- Optimization literature canonically formulates optimization problems as minimization problems
 	- This is our loss function!
 # Loss Function
@@ -348,12 +354,127 @@ $$
 		- Assume $y_{i} \sim p(y | x_{i})$
 		- $H(p, p) \approx - \log p_{\theta}(y_{i} | x_{i})$
 			- $\sum_{y} p(y)$
-	- Zero-one loss
+	- Zero-one loss ^zero-one-loss
 		- $$\huge\sum_{i} \delta (f_{\theta}(x_{i} \neq y_{i}))$$
 		- $$\huge \delta(x_{i}, y_{i}) \begin{cases}0 &\text{if } x_{i} = y_{i} \\ 1 &\text{if } x_{i} \neq y_{i}\end{cases}$$
 			- Loss of 0 -> right answer
 			- Loss of 1 -> wrong answer
-	- Mean squared error
+	- Mean squared error ^mean-squared-error
 		- Useful if you're predicting a number instead of a label
 		- $$\huge \sum_{i} \frac{1}{2} || f_{\theta}(x_{i}) - y_{i}||^2$$
 		- Actually just negative log-likelihood
+# Loss "Landscape"
+$$\huge \theta \leftarrow \arg \min_{\theta} -  \underbrace{ \sum_{i}\log p_{\theta}(y_{i} | x_{i}) }_{ \mathcal{L}(\theta) }$$
+- Let's say $\theta$ is 2D ($\theta_{1}, \theta_{2})$
+	- ![[Pasted image 20250207105451.png]]
+- Algorithm to minimize our loss function $\mathcal{L}(\theta)$
+	1. Find a direction $v$ where $\mathcal{L}(\theta)$ decreases
+	2. $\theta \leftarrow \theta + \alpha v$
+		- $\alpha =$ learning rate or step size
+	3. Repeat
+# Gradient Descent
+- Which way does $\mathcal{L}(\theta)$ decrease?
+	- ![[Pasted image 20250207105652.png]]
+	- Negative slope -> go right
+	- Positive slope -> go left
+		- For each dimension go in direction opposite the slope along that dimension
+		- $$\huge \begin{align} v_{1} = - \frac{d\mathcal{L}(\theta)}{d\theta_{1}} \\  v_{2} = - \frac{d\mathcal{L}(\theta)}{d\theta_{2}}\end{align}$$
+			- Partial derivatives return the steepest decline
+		- Any vector $u$ with a positive dot product with $v$ will still decrease
+			- Dot product returns $1$ if two vectors are pointing in same direction
+- Gradient
+$$\huge\nabla_{\theta} \mathcal{L}(\theta) = \begin{bmatrix}
+\dfrac{dL(\theta)}{d\theta_{1}}  \\
+\dfrac{dL(\theta)}{d\theta_{1}} \\
+\vdots \\
+\dfrac{dL(\theta)}{d\theta_{n}} \\
+\end{bmatrix}$$
+- Gradient descent -> This is an optimizer!
+	1. Compute gradient $\nabla_{\theta}\mathcal{L}(\theta)$
+	2. $\theta \leftarrow \theta - \alpha \nabla_{\theta}\mathcal{L}(\theta)$
+		1. Apply the gradient with a step size of $\alpha$ to the parameters
+	3. Repeat
+# Logistic Regression
+- ![[Pasted image 20250207112829.png]]'
+- Neurons
+	- $$
+	\huge
+	f_{\theta}(x) = x^T \theta = \begin{bmatrix}
+	x^T \theta_{y_{1}} \\
+	x^T \theta_{y_{2}} \\
+	\vdots \\
+	x^T \theta_{y_{m}}
+	\end{bmatrix}
+	$$
+		- ![[Pasted image 20250207111032.png]]
+		- $\theta =$ matrix of parameters
+			- We use each row in the matrix in $x^T \theta_{y_{i}}$ to calculate the parameter
+- Activation function -> softmax
+	- $$\huge p_{\theta}(y = i | x) = \text{softmax}(f_{\theta}(x))[i] = \frac{\exp(f_{\theta, i} (x))}{\sum_{j=1}^m \exp(f_{\theta, j}(x))}$$
+- Loss function -> negative log-likelihood
+	- $$\huge \mathcal{L}(\theta) = - \sum_{i}^n \log p_{\theta}(y_{i} | x_{i})$$
+- Optimizer -> gradient descent
+	1. Compute gradient $\nabla_{\theta} \mathcal{L}(\theta)$
+	2. $\theta \leftarrow \theta - \alpha \nabla_{\theta}\mathcal{L}(\theta)$
+		1. Apply gradient
+	3. Repeat
+## Special Case: Binary Classification
+- What if we have only two classes?
+$$\huge\begin{align}
+P(y_{1} | x) &= \frac{e^{\theta^T_{y_{1}} x}}{e^{\theta^T_{y_{1}} x} + e^{\theta^T_{y_{2}} x}} \\
+&= \frac{e^{\theta^T_{y_{1}} x}}{e^{\theta^T_{y_{1}} x} + e^{\theta^T_{y_{2}} x}} \left( \frac{e^{-\theta _{y_{1}}^T}}{e^{ -\theta _{y_{1}}^T}} \right) \\
+&= \frac{e^{0}}{e^{0} + e^{\theta^T_{y_{2}} x - \theta^T_{y_{1}} x}}\\
+&= \frac{1}{1 + e^{\theta^T_{y_{2}} x - \theta^T_{y_{1}} x}}\\
+&= \frac{1}{1 + e^{-\theta_{+}^Tx}}\\
+\end{align}$$
+	- $P(y_{1} | x) + P(y_{2} | x) = 1$
+	- If we know $P(y_{1} | x)$, we know $P(y_{2} | x)$
+	- Let $\theta_{+} = \theta_{1} - \theta_{2}$
+		- $-\theta_{+} = -\theta_{1} + \theta_{2}$
+	- We only need to calculate one $\theta_{+}$, which we can reduce the calculation
+	- In general, softmax is always overparameterized
+		- Can take out 1 vector
+		- For large # of parameters, this isn't really done in practice
+			- Taking out 1 parameter doesn't make that big of a difference
+	- This is also known as logistic regression 
+		- ![[Pasted image 20250207113724.png]]
+		- Sometimes referred to as sigmoid
+# Empirical Risk and True Risk
+- Zero-one loss -> 1 if wrong, 0 if wrong
+- Risk -> probability you will get it wrong
+	- ![[Pasted image 20250207114026.png]]
+		- Photos sampled from distribution of all photos
+	- $y \sim p(y | x)$
+	- How likely is it that $f_{\theta}(x)$ is wrong?
+	- Quantifiable by the expected value of our loss
+		- Using expected value can be generalized to other losses
+- $$\huge \text{Risk} = E_{x \sim p(x),y \sim p(y | x)} [\mathcal{L}(x, y, \theta)]$$
+- During training, we can't sample $x \sim p(x)$, we just have $\mathcal{D}$
+- Instead we can calculate empirical risk
+	- Empirical -> based on observation
+- $$\huge \text{Empirical risk} = \frac{1}{2} \sum_{i = 1}^n \mathcal{L}(x_{i}, y_{i}, \theta) \approx E_{x \sim p(x), y \sim p(y | x) [\mathcal{L}(x, y, \theta)]}$$
+	- Empirical risk is approximation of true risk
+	- Is this a good approximation?
+# Empirical Risk Minimization
+- Supervised learning is usually empirical risk minimization
+- Is this the same as true risk minimization?
+	- Overfitting
+		- When empirical risk is low, but true risk is high
+		- ![[Pasted image 20250207114744.png]]
+		- Fitting a high degree polynomial
+			- Low empirical risk -> passes through all points
+			- True risk -> doesn't accurately model a line
+		- Can happen
+			- If the dataset is too small
+			- If the model is too powerful (too many parameters/capacity)
+	- Underfitting
+		- When empirical risk is high, and true risk is high
+		- ![[Pasted image 20250207114858.png]]
+		- Can happen
+			- If model is too weak (too few parameters/capacity)
+			- If your optimizer is not configured well (wrong learn rate)
+# Summary
+1. Define your model class
+2. Define your loss function
+3. Pick your optimizer
+4. Run it on a big GPU
