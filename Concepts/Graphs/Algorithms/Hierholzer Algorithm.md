@@ -123,4 +123,4 @@ Hierholzer's algorithm
 	- Must verify graph using Eulerian path existence algorithm first
 - $O(V + E)$
 - DFS from start node, then backtrack and add node to path, finally reverse path array
-<!--SR:!2025-02-01,18,250-->
+<!--SR:!2025-03-25,44,250-->

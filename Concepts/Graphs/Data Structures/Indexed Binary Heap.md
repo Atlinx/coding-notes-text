@@ -200,8 +200,8 @@ Indexed binary heap
 - Big O
 	- Space $\to O(n)$
 	- Time
-		- Heapify $\to O(n \log n)$
+		- Heapify $\to O(n)$
 		- Push $\to O(\log n)$
 		- Pop $\to O(\log n)$
 		- Update $\to O(\log n)$
-<!--SR:!2025-02-09,22,250-->
+<!--SR:!2025-04-05,55,250-->

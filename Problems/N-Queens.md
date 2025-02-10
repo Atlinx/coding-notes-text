@@ -28,4 +28,4 @@ N-Queens
 		- Iterate `x` from `[0, n]`
 			- If none of following exist: `cols[x], left_diag[x + y], right_diag[x - y]`
 				- Add queen to `x, y` and DFS `y + 1`
-<!--SR:!2025-02-07,20,250-->
+<!--SR:!2025-03-31,50,250-->

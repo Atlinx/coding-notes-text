@@ -74,4 +74,4 @@ Adjacency matrix
 	- Time
 		- Lookup edge $\to O(1)$
 		- Add/remove edge $\to O(1)$
-<!--SR:!2025-02-05,21,250-->
+<!--SR:!2025-04-03,53,250-->

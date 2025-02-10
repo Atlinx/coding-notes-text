@@ -129,7 +129,7 @@ Binary search: Find index
 		- `lo = mid + 1`
 	- else
 		- Return `mid`
-<!--SR:!2025-02-08,19,250-->
+<!--SR:!2025-03-29,48,250-->
 
 Binary search: Find left-most index
 ?
@@ -155,4 +155,4 @@ Binary search: Find right-most index
 	- else
 		- `lo = mid + 1`
 - Return `hi`
-<!--SR:!2025-02-06,19,250-->
+<!--SR:!2025-03-28,47,250-->

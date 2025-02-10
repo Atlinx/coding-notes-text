@@ -47,7 +47,7 @@ Egg Drop With 2 Eggs and N Floors
 		- Space $\to O(1)$
 	- Let $x$ = minimum number of moves
 	- We focus on dropping first egg
-		- If first egg breaks, then remaining moves = number of remaining slots, because we   
+		- If first egg breaks, then remaining moves = number of remaining slots, because we
 		- can't afford to break the second egg
 	- 1st move $\to$ highest we can drop is at $x$
 		- If egg breaks, then we must check $[1, x - 1]$ using the second egg, which creates  $x - 1$ additional moves
@@ -67,4 +67,4 @@ Egg Drop With 2 Eggs and N Floors
 	- Finally, we can use the quadratic formula to solve for $x$, taking care of only using the positive root solution, because we can't have a negative $x$ (min moves)
 	- Make sure to ceil the solution before returning because our final move may not necessarily land exactly on $n$, and may sometimes overshoot $n$
 		- However, our calculations try to find $x$ such that our final move lands exactly on $n$
-<!--SR:!2025-01-25,7,250-->
+<!--SR:!2025-02-13,4,230-->

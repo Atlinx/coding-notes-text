@@ -62,4 +62,4 @@ Manhattan Distances of All Arrangements of Pieces
 				- `tot += arithmetic_series_sum * m * m`
 		- Columns:
 			- Do the same as what was done for rows, except reverse variables for rows + columns
-<!--SR:!2025-01-26,2,230-->
+<!--SR:!2025-02-10,1,210-->

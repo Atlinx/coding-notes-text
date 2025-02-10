@@ -22,7 +22,7 @@ Minimum Interval to Include Each Query
 - Line sweep
 	- Big O
 		- Time $\to O(q \log q + n \log n)$
-		- Space $\to O(n)$
+		- Space $\to O(q + n)$
 		- where
 			- $q$ = number of queries
 			- $n$ = number of intervals
@@ -35,4 +35,5 @@ Minimum Interval to Include Each Query
 		- While `min_end_heap[0].end` is before `q`
 			- Pop heap
 		- Top of `min_end_heap` is answer to `q`
-<!--SR:!2025-01-31,12,230-->
+	- Iterate over `query_res` cache to answer each query `q`
+<!--SR:!2025-03-10,29,230-->

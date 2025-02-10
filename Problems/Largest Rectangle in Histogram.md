@@ -29,4 +29,4 @@ Largest Rectangle in Histogram
 			- Set `start = popped_index`
 		- Push `(start, h)` into stack
 	- Parse area of remaining portion of stack
-<!--SR:!2025-02-06,18,250-->
+<!--SR:!2025-03-25,44,250-->

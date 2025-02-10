@@ -160,7 +160,7 @@ Depth first search
 	- Time $\to O(V + E)$
 	- Space $\to O(V)$
 - Go as deep as possible through one child before checking other children
-<!--SR:!2025-01-31,17,250-->
+<!--SR:!2025-03-23,42,250-->
 
 Depth first search: Recursive
 ?

@@ -79,4 +79,4 @@ Line sweep algorithm
 	- While `int_end_heap[0].end > q` $\to$ ensure top of heap is an interval that hasn't ended
 		- `int_end_heap.pop()`
 	- `int_end_heap[0].value` = answer for query `q`
-<!--SR:!2025-01-26,12,230-->
+<!--SR:!2025-03-08,27,230-->
