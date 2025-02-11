@@ -34,11 +34,11 @@ Longest Special Path
 - DFS + Sliding window
 	- Big O
 		- Time $\to O(E + V)$
-		- Space $\to O(E + V)$
-			- Adjacency matrix representation of graph
+		- Space $\to O(E + V + V) = O(E + V)$
+			- Adjacency list representation of graph + deepest DFS search possible (longest stack possible)
 	- `adj` = Convert edges to adjacency matrix representation of graph
 	- `dist = {}`
-		- DFS to build `dist` mapping of length from every node to roo
+		- DFS to build `dist` mapping of length from every node to root
 		- Enables $O(1)$ length calculation between two nodes along the same downward path
 	- DFS to find special paths, `v = current node`
 		- Shared vars
@@ -50,4 +50,4 @@ Longest Special Path
 		- Add `v` to `path` and `last_seen`
 		- DFS children of `v`
 		- Undo any changes to `path_start, path` and `last_seen`
-<!--SR:!2025-01-30,8,250-->
+<!--SR:!2025-02-11,1,250-->

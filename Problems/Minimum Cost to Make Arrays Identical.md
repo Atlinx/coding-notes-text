@@ -28,4 +28,4 @@ Minimum Cost to Make Arrays Identical
 		- Split array and shuffle around `arr` for cost of k + add/subtracting to reach `brr`
 		- Adding/subtracting initial `arr` to `brr`
 	- If we choose to shuffle `arr`, we want to create the smallest difference between each pair, therefore we should sort both `arr` and `brr`
-<!--SR:!2025-01-31,9,250-->
+<!--SR:!2025-03-04,22,250-->

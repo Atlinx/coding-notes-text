@@ -32,4 +32,4 @@ Min Stack
 	- `min_stack` = stack that tracks minimum at a given point
 	- When pushing, `new_min = min(min_stack[-1], new_num)`
 	- When popping, pop both stacks
-<!--SR:!2025-01-26,8,250-->
+<!--SR:!2025-03-02,20,250-->

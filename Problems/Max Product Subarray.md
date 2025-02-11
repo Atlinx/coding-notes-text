@@ -26,4 +26,4 @@ Maximum Product Subarray
 			- From itself, `i`
 		- `min_p = min(max_p * i, min_p * i, i)`
 		- `max_p = max(max_p * i, min_p * i, i)`
-<!--SR:!2025-02-08,19,250-->
+<!--SR:!2025-03-30,48,250-->

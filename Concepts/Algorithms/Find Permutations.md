@@ -100,4 +100,4 @@ Find permutations
 		- Iterate `res`, `r`
 			- Iterate insertion slots in `r`
 				- Make copy of `r` and insert `a` into slot
-<!--SR:!2025-02-10,19,250-->
+<!--SR:!2025-02-11,1,230-->

@@ -30,8 +30,7 @@ B_adj = init_undir("D-B 2, D-A 4, D-G 6, A-C 8, A-E 3, G-E 5, G-H 8, E-B 1, E-H 
 def lazy_dijkstra(adj, source):
 	dist = {}       # shortest distance to each vertex
 	prev = {}       # previous node for each node (edge from prev_node -> node)
-	visited = set() # whether we've been to node before
-
+	
 	for a in adj:
 		dist[a] = float("inf")
 		prev[a] = None
@@ -41,12 +40,7 @@ def lazy_dijkstra(adj, source):
 	min_heap = [(0, source)]
 	while min_heap:
 		path_dist, node = heapq.heappop(min_heap)
-		visited.add(node)
-		if dist[node] < path_dist:
-			continue
 		for neigh, neigh_weight in adj[node]:
-			if neigh in visited:
-				continue
 			# update distance + insert into heap if there is improvement
 			if path_dist + neigh_weight < dist[neigh]:
 				dist[neigh] = path_dist + neigh_weight
@@ -264,8 +258,7 @@ class MinIndexHeap(MaxIndexHeap):
 def eager_dijkstra(adj, source):
 	dist = {}       # shortest distance to each vertex
 	prev = {}       # previous node for each node (edge from prev_node -> node)
-	visited = set() # whether we've been to node before
-
+	
 	for a in adj:
 		dist[a] = float("inf")
 		prev[a] = None
@@ -276,12 +269,7 @@ def eager_dijkstra(adj, source):
 	min_heap = MinIndexHeap({ source: 0 })
 	while len(min_heap) > 0:
 		node, path_dist = min_heap.pop()
-		visited.add(node)
-		if dist[node] < path_dist:
-			continue
 		for neigh, neigh_weight in adj[node]:
-			if neigh in visited:
-				continue
 			# update distance + insert into heap if there is improvement
 			if path_dist + neigh_weight < dist[neigh]:
 				dist[neigh] = path_dist + neigh_weight
@@ -348,10 +336,9 @@ Dijkstra's algorithm
 	- `min_heap` $\to$A heap of next shortest path to explore, `min_heap = [(source, 0)]`
 	- `dist` $\to$ array of shortest path distances to each vertex, `dist[source] = 0`
 	- `prev` $\to$ array of previous vertex for each vertex (stores shortest path search tree)
-	- `visited` $\to$ visited set
+	- **NOTE:** Dijkstra's algorithm doesn't need a `visited` set — propagation stops automatically
 	- While `min_heap`
 		- `path_dist, node = min_heap.pop()`
-		- `visited.add(node)`
 		- For neighbor
 			- If `path_dist + neigh.weight < dist[neigh]`
 				- `dist[neigh] = path_dist + neigh.weight`
@@ -367,7 +354,7 @@ Dijkstra's algorithm
 		- Number of children per node is set to $\dfrac{E}{V}$ to make decrease key more efficient
 	- Fibonacci $\to O(E + V \log V)$
 		- Tends to have a large constant overhead in practice
-<!--SR:!2025-02-10,1,190-->
+<!--SR:!2025-02-11,1,250-->
 
 Dijkstra's algorithm: Priority queue
 ?
