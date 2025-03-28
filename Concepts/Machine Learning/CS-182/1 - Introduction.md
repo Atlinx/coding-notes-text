@@ -209,3 +209,32 @@ $$\huge f_{\theta}(x) = y$$
 	- **Ex.** Airplanes adopt solutions similar to birds -> use wings
 		- ![[Pasted image 20250206185656.png]]
 	- This means deep learning cold be equally powerful
+# Flashcards
+#flashcards/machine-learning/cs-182/1-introduction
+
+Machine learning
+?
+- We want a program that label an image
+	- Machine learning is the idea of having the program acquire the relationship between images and labels from **data** or **examples** than to implement those rules
+- It's a function that takes in some input $x$, and makes a prediction $y$
+	- The function can be adjusted by tweaking the it's additional parameters $\theta$
+- $$
+\begin{align}
+\huge f(x, \theta) = y
+\end{align}
+$$
+	- $x =$ inputs
+	- $\theta$ = parameters -> these are learned
+	- $y$ = output
+		- **Ex.** label
+
+
+
+What makes modern machine learning work?
+?
+1. **Big** models with many layers
+	- Better captures complex representations
+2. **Large** datasets with many examples
+	- Humans also learn from a large amount of data
+3. Enough **compute** to handle all this
+	- Can't wait for years to years for training
