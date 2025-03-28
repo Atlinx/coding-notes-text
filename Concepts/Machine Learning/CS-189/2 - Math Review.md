@@ -147,7 +147,7 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 - Gradient -> For functions with vector inputs and scalar outputs
 	- The column vector of partial derivatives of the function with respect to each entry in the input is the **gradient**
 	- Let $f : \mathbb{R}^n \to \mathbb{R}$ be a scalar field
-		- This means $f$ maps some vector of inputs to a scalar output
+		- This means $f$ maps some vector of inputs in $\mathbb{R}^n$ dimensions to a scalar output (real numbers $\mathbb{R}$)
 	- The gradient of $f$ is denoted as $\nabla f$
 		- $\nabla f : \mathbb{R}^n \to \mathbb{R}^n$
 			- $f(x_{1}, x_{2}, \dots, x_{n})$
@@ -155,6 +155,7 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 				- $f_{x_{1}}$ here means the partial derivative of $f$ with respect to $x_{1}$
 				- $(\nabla f)_{j} = \dfrac{ \partial f }{ \partial x_{j} }$
 			- $\nabla f$ is a vector field, because it maps a vector of inputs to a vector output
+	- Commonly, people write $\dfrac{df}{dx} = (\nabla_{x} f)^T$
 - Jacobian -> For functions with vector inputs and **vector outputs**
 	- Then we have a matrix of partial derivatives of partial derivatives which is referred to as **Jacobian** matrix
 	- Each cell is the partial derivative of a specific input variable over a specific output variable
@@ -177,7 +178,10 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 	- AKA the **Jacobian** of the gradient function
 	- Hessian matrix is denoted as $H_{i,j}$
 	- $$\huge H(f) = J(\nabla f) = \nabla^2 f = \begin{bmatrix} f_{x_{1}x_{1}} &f_{x_{1}x_{2}} &\dots &f_{x_{1}x_{n}} \\ f_{x_{2}x_{1}} &f_{x_{2}x_{2}} &\dots & f_{x_{2}x_{n}}\\ \vdots &\vdots &\ddots &\vdots \\ f_{x_{n} x_{1}} &f_{x_{n} x_{2}} &\dots &f_{x_{n} x_{n}} \end{bmatrix}$$
+		- This matrix is square and symmetric
+		- For convex functions, its Hessian is positive semi-definite
 	- $H_{i,j} = \dfrac{ \partial^2 f }{ \partial x_{i} \partial x_{j} }$
 		- This is a matrix of second-ordered mixed partials of a scalar field
 		- [Mixed partial derivatives](https://tutorial.math.lamar.edu/classes/calciii/highorderpartialderivs.aspx)
+	- Note, this is not the same as entropy (even though they both are denoted using $H$)
 - [Matrix cookbook](https://math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
