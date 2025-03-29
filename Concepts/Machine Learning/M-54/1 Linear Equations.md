@@ -1,19 +1,19 @@
 # 1 Linear Equations in Linear Algebra
 # 1.1 System of Linear Equations
-- **DEFINE:** Linear equation^linear-equation
+- **DEFINE:** Linear equation ^linear-equation
 	- Linear equation of variables $x_{1}, \dots, x_{n}$ is an equation that can be written in form
 		- $$a_{1} x_{1} + a_{2}x_{2} + \dots + a_{n} x_{n} = b$$
 	- Coefficients -> $a_{1}, \dots, a_{n}$
 	- Coefficients + $b$ are real or complex numbers
 	- Subscript $n$ is a positive integer
-- **DEFINE:** Linear system^linear-system
+- **DEFINE:** Linear system ^linear-system
 	- Collection of one or more linear equations
 	- **Ex.**
 	- $$\begin{align}
 		2x_{1} - x_{2} + 1.5x_{3} = 8 \\
 		x_{1} - 4x_{3} = -7
 		\end{align}$$
-- **DEFINE:** Solution of a system^solution-of-system
+- **DEFINE:** Solution of a system ^solution-of-system
 	- List of numbers $(s_{1}, s_{2}, \dots, s_{n})$ that make each equation in a system of equations true when substituted in for $x_{1}, x_{3}, \dots, x_{n}$
 	- System of linear equations has either
 		- No solution
@@ -25,22 +25,22 @@
 		- ![[Pasted image 20250329104851.png]]
 			- If two lines are parallel, then there are no solutions
 			- If the two lines lie on top of each other, then there are infinitely many solutions
-- **DEFINE:** Solution set
-	- Set of all possible solutions
-- **DEFINE:** Equivalence
+- **DEFINE:** Solution set ^solution-set
+	- Set of all possible solutions to a linear system of equations
+- **DEFINE:** Equivalence ^equvalent
 	- Two linear systems of equivalent if they have same solution se
-- **DEFINE:** Consistency
+- **DEFINE:** Consistency ^consistency
 	- System of linear equations is consistent if it has a solution (one solution or infinitely many solutions)
 	- System of linear equations is inconsistent if it has no solutions
 ## Matrix Notation
-- **DEFINE:** Matrix
+- **DEFINE:** Matrix ^matrix
 	- Recording a linear system of equations in a regular array
 	- $$\begin{array}{}
 		x_{1} &-2x_{2} &+x_{3} &= 0 \\
 		&2x_{2} &-8x_{3} &= 8 \\
 		5x_{1} & &-5x_{3} &= 10
 		\end{array}$$
-	- **DEFINE:** Coefficient matrix
+	- **DEFINE:** Coefficient matrix ^coefficient-matrix
 		- Coefficients of each variable are aligned in columns
 		- $$\begin{bmatrix}
 			1 &-2 &1 \\
@@ -49,7 +49,7 @@
 			\end{bmatrix}
 			$$
 		- **NOTE:** Terms of $x_{i}$ that do not appear in an equation have a coefficient 0, since that causes the term to disappear
-	- **DEFINE:** Augmented matrix
+	- **DEFINE:** Augmented matrix ^augmented-matrix
 		- This is the coefficient matrix with an extra column, that includes the $b$ part of the linear system of equations
 		- This extra column is often separated by a line
 		- $$\left[\begin{array}{ccc|c}
@@ -58,7 +58,7 @@
 			5 &0 &-5 &10
 			\end{array}\right]
 			$$
-- **DEFINE:** Size of matrix
+- **DEFINE:** Size of matrix ^size-of-matrix
 	- Number of rows and columns a matrix has
 	- $m \times n$ matrix has $m$ rows and $n$ columns
 		- **NOTE:** We always list the rows first when describing the size of a matrix
@@ -120,7 +120,7 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 - Each 3-term equation in system of equations above determines a plane in three-dimensional space, similar to [[#^visualize-solutions|we can visualize 2-term systems as lines]]
 	- The point which intersects all three points is the solution
 	- ![[Pasted image 20250329102955.png]]
-- **DEFINE:** Elementary row operations
+- **DEFINE:** Elementary row operations ^elementary-row-operations
 	- Operations that can be done on rows of a matrix that produce an equivalent equation
 	- Types
 		1. Replacement -> replace one row by sum of itself and a multiple of another row
@@ -134,13 +134,13 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 		- $N =$ some non-zero constant
 	- Row operations are reversible
 - **DEFINE:** Row equivalence
-	- Two matrices are row equivalent if there is a sequence of elementary row operations that transforms one matrix into another
+	- Two matrices are **row equivalent** if there is a sequence of elementary row operations that transforms one matrix into another
 - If augmented matrices of two linear systems are row-equivalent, then two systems have same solution set
 ## Existence and Uniqueness Questions
 - Two fundamental questions about linear system
 	- Is the system consistent ($\geq$ 1 solution)?
 	- If solution exists, is the solution unique (exactly $1$ solution)?
-- **DEFINE:** Triangular form
+- **DEFINE:** Triangular form ^triangular-form
 	- An augmented matrix where every row has zeroes before a one, and each row has one or more zeroes than the previous row
 	- This form a "triangle of zeroes" on the bottom left of the matrix
 	- $$\begin{align}
@@ -161,7 +161,7 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 		\end{array}\right] \\
 		\end{align}$$
 # 1.2 Row Reduction and Echelon Forms
-- **DEFINE:** Leading entry
+- **DEFINE:** Leading entry ^leading-entry
 	- The leading entry of a row is the left-most non-zero entry in the row
 	- $$\begin{bmatrix}
 		0& 1 &4 &-2 &3\\
@@ -169,7 +169,7 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 		0& 0 &0 &5 &-2
 		\end{bmatrix}$$
 		- **Ex.** Leading entry for first row = 1, leading entry for second row = 7, leading entry for third row = 5
-- **DEFINE:** Row echelon form
+- **DEFINE:** Row echelon form ^row-echelon-form
 	- AKA echelon form
 	- A regular matrix is in echelon form if it has three properties
 		1. All nonzero rows are above any rows of all zeroes
@@ -185,7 +185,7 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 	- If matrix $A$ is row equivalent to an echelon matrix $U$, then
 		- $U$ is a row echelon form of $A$
 	- Any matrix can be row-reduced (transformed using elementary row operations) into more than one possible echelon forms, using different sequences of operations
-- **DEFINE:** Reduced row echelon form
+- **DEFINE:** Reduced row echelon form ^redued-row-echelon-form
 	- AKA reduced echelon form
 	- A matrix in echelon form that also has the following properties
 		1. Leading entry in each nonzero row is 1
@@ -249,10 +249,10 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 		x_{2} = 4 - x_{3} \\
 		x_{3} \text{ is free}
 		\end{cases}$$
-- **DEFINE:** Basic variables
+- **DEFINE:** Basic variables ^basic-variables
 	- Variables that are a pivot in the reduced-echelon form of the matrix
 	- Appears in exactly one matrix
-- **DEFINE:** Free variables
+- **DEFINE:** Free variables ^free-variables
 	- Variables that are not a pivot in the reduced-echelon form of the matrix
 	- May occur in multiple equations in the reduced-echelon form of the matrix
 	- We are free to choose any value of the free variables, and then solve for basic variables to identify a solution to the system
@@ -304,7 +304,7 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	5. Rewrite each nonzero equation so its basic variable is expressed in terms of any free variables in equation
 # 1.3 Vector Equations
 ## Vectors in $\mathbb{R}^2$
-- **DEFINE:** Vector
+- **DEFINE:** Vector ^vector
 	- Ordered list of numbers
 	- Column vector -> matrix with only one column
 	- Row vector -> matrix with only row column
@@ -317,8 +317,9 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 				- Because vectors in $\mathbb{R}^2$ are ordered pairs of real numbers
 - Sum of vectors is adding their entries
 	- $$$$
-- **DEFINE:** Scalar
+- **DEFINE:** Scalar ^scalar
 	- A regular number (not a vector)
+	- **Ex.** $3$ and $-4.3$ are scalars
 - Given two vectors $\mathbf{u}$ and $\mathbf{v}$, their sum is vector $\mathbf{u} + \mathbf{v}$ obtained by adding corresponding entries of $\mathbf{u}$ and $\mathbf{v}$ together 
 	- Given
 		- $\mathbf{u} = \begin{bmatrix}1 \\ -2\end{bmatrix}$
@@ -335,7 +336,7 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	- $\mathbb{R}^2$ therefore is the set of all points on the plane
 	- ![[Pasted image 20250329120802.png]]
 		- Points are often visualized with an arrow drawn from the origin to the point
-- **DEFINE:** Parallelogram rule for addition
+- **DEFINE:** Parallelogram rule for addition ^parallelogram-rule-addition
 	- If $\mathbf{u}$ and $\mathbf{v}$ in $\mathbb{R}^2$ are points in the plane, then $\mathbf{u} + \mathbf{v}$ corresponds to fourth vertex on parallelogram
 	- ![[Pasted image 20250329120735.png]]
 		- You can imagine this as taking the first vector $\mathbf{u}$ and laying it out on the origin
@@ -348,10 +349,12 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 ## Vectors in $\mathbb{R}^n$
 - If n is a positive integers, then $\mathbb{R}^n$ is collection of all lists of $n$ real numbers, usually written as $n \times 1$ column matrices
 	- $\mathbf{u} = \begin{bmatrix}u_{1} \\ u_{2} \\ \vdots \\ u_{n}\end{bmatrix}$
-- **DEFINE:** Zero vector
+- **DEFINE:** Zero vector ^zero-vector
 	- Vectors whose entries are all zero, denoted by $\mathbf{0}$
+	- **Ex.**
+		- $\mathbf{0} = \begin{bmatrix}0 \\ 0 \\ \vdots \\ 0\end{bmatrix}$
 - Scalar multiplication and vector addition are defined entry by entry
-- **DEFINE:** Algebraic properties of $\mathbb{R}^n$
+- **DEFINE:** Algebraic properties of $\mathbb{R}^n$ ^properties-of-Rn
 	- For all vectors $\mathbf{u}, \mathbf{v}, \mathbf{w}$ in $\mathbb{R}^n$ and all scalars $c, d$
 		1. $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$
 		2. $(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} +\mathbf{w})$
@@ -377,7 +380,7 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	- Has the same solution set as linear system whose augmented matrix is
 		- $\left[\begin{array}{cccc|c}\mathbf{a}_{1} &\mathbf{a}_{2} &\dots &\mathbf{a}_{n} &\mathbf{b}\end{array}\right]$
 	- $\mathbf{b}$ can be generated by a linear combination of $\mathbf{a}_{1}, \dots, \mathbf{a}_{n}$ if and only if there exists a solution to the linear system corresponding to the augmented matrix above
-- **DEFINE:** Span
+- **DEFINE:** Span ^span
 	- Set of all vectors that can be generated or written as a linear combination of a fixed set of vectors $\{ \mathbf{v}_{1}, \dots \mathbf{v}_{p} \}$
 	- Denoted by $\text{Span} \{ \mathbf{v_{1}, \dots, \mathbf{v_{p}}} \}$
 		- Represents collection of vectors that can be rewritten in the form
@@ -422,12 +425,12 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	- The columns of $A$ span $\mathbb{R}^m$
 	- $A$ has a pivot position in every row
 ## Computation of $A \mathbf{x}$
-- **DEFINE:** Dot product
+- **DEFINE:** Dot product ^dot-product
 	- Dot product of two vectors $\mathbf{a}$ and $\mathbf{b}$ is
 	- $\mathbf{a} \cdot \mathbf{b} = a_{1} b_{1} + a_{2} b_{2} + \dots + a_{n} b_{n}$ 
 - Steps to compute $A\mathbf{x}$
 	- Go row by row in the matrix, taking each entry of row multiplied by the corresponding entry in the vector $\mathbf{x}$
-- **DEFINE:** Identity matrix
+- **DEFINE:** Identity matrix ^identity-matrix
 	- An $n \times n$ matrix where diagonal of the matrix are all ones, and the remaining entries are all zeroes
 	- **Ex.** Identity matrix of $\mathbb{R}^3$
 		- $I_{3} = \begin{bmatrix}1 &0 &0 \\ 0 &1 &0 \\ 0 &0 &1\end{bmatrix}$
@@ -440,7 +443,7 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	- $A(c \mathbf{u}) = c(A\mathbf{u})$
 # 1.5 Solution Sets of Linear Systems
 ## Homogenous Linear Systems
-- **DEFINE:** Homogenous
+- **DEFINE:** Homogenous ^homogenous
 	- A system of linear equations is homogenous if it can be written in form $A \mathbf{x} = \mathbf{0}$ where $A$ is $m \times n$ matrix and $\mathbf{0}$ is the zero vector in $\mathbb{R}^m$
 	- Trivial solution -> $A \mathbf{x} = \mathbf{0}$ always has at least one solution $\mathbf{x} = \mathbf{0}$
 	- Nontrivial solution -> nonzero vector $\mathbf{x}$ that satisfies $A\mathbf{x} = \mathbf{0}$
@@ -508,9 +511,14 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 - **DEFINE:** Transformation
 	- Transformation from $\mathbb{R}^n$ to $\mathbb{R}^m$ assigns each vector $\mathbf{x}$ in $\mathbb{R}^n$ to a vector $T(\mathbf{x})$ in $\mathbb{R}^m$
 	- Domain -> Set of $\mathbb{R}^n$
+		- Set of all inputs for $T(\mathbf{x})$, the different values that $\mathbf{x}$ can take on
 	- Codomain -> Set of $\mathbb{R}^m$
+		- Set of all possible values that $T(\mathbf{x})$ acn be 
 	- For a vector $\mathbf{x}$, the vector $T(\mathbf{x})$ is called the **image** of x, under the action of $T$
-	- The set of all images $T(\mathbf{x})$ is called the **range** of $T$
+	- Range -> The set of all images $T(\mathbf{x})$, the set of all outputs from $T(\mathbf{x})$
+		- **NOTE:** Range is DIFFERENT from the codomain
+			- The range is a subset of the codomain ($\text{range} \subseteq \text{codomain}$)
+			- Range is the actual set of outputs that $T(\mathbf{x})$ output
 	- ![[Pasted image 20250329135124.png]]
 ## Linear Transformation
 - **DEFINE:** Linear transformation
@@ -525,6 +533,48 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 	- Rotation
 		- ![[Pasted image 20250329135731.png]]
 # 1.9 The Matrix of Linear Transformation
-- Every linear transformation is actually a matrix transformation $\mathbf{x} \to A \mathbf{x}$
-- **DEFINE:** Identity matrix
-	- $I_{n} = $
+- Every linear transformation is actually a matrix transformation $\mathbf{x} \mapsto A \mathbf{x}$
+- A linear transformation is determined by what it does to the columns of an $n \times n$ identity matrix $I_{n}$
+	- Let $T : \mathbb{R}^n \to \mathbb{R}^m$ be a linear transformation
+		- There exists a unique matrix such that
+			- $T(\mathbf{x}) = A\mathbf{x}$ for all $\mathbf{x}$ in $\mathbb{R}^n$
+		- $A$ is an $m \times n$ matrix whose $j^{th}$ column is the vector $T(\mathbf{e}_{j})$, where $\mathbf{e}_{j}$ is the $j^{th}$ column of the identity matrix in $\mathbb{R}^n$
+		- $A = \begin{bmatrix}T(\mathbf{e}_{1}) &\dots & T(\mathbf{e}_{n})\end{bmatrix}$
+			- This is known as **the standard matrix for the linear transformation**
+- Linear transformation -> focuses on a mapping
+- Matrix transformation -> describes how a mapping is implemented
+- The matrix corresponding to a linear transformation is called the **standard matrix for the linear transformation**^standard-matrix
+## Geometric Linear Transformations of $\mathbb{R}^2$
+## Existence and Uniqueness Questions
+- **DEFINE:** Onto (surjective) mapping
+	- A mapping $T : \mathbb{R}^n \to \mathbb{R}^m$ is **onto** $R^m$ if each $\mathbf{b}$ in $\mathbb{R}^m$ is the image of at least one $\mathbf{x}$ in $\mathbb{R}^n$
+	- There exists at least one solution of $T(\mathbf{x}) = \mathbf{b}$
+		- Every $\mathbf{b}$ has a solution $\mathbf{x}$
+		- Multiple $\mathbf{x}$ can map to the same $\mathbf{b}$
+		- The range = the codomain
+	- It is not onto if there exists some $\mathbf{b}$ in $\mathbb{R}^m$ which $T(\mathbf{x}) = \mathbf{b}$ has no solution
+	- ![[Pasted image 20250329151624.png]]
+- **DEFINE:** One-to-one (injective)
+	- A mapping $T: \mathbb{R}^n \to \mathbb{R}^m$ is one-to-one if each $\mathbf{b}$ in $\mathbb{R}^m$ is the image of at most one $\mathbf{x}$ in $\mathbb{R}^n$
+	- For each $\mathbf{b}$ in $\mathbb{R}^m$, $T(\mathbf{x}) = \mathbf{b}$ has either a unique solution or no solution at all
+		- Every $\mathbf{b}$ within the image/range of the transformation 
+		- The range $\subseteq$ the codomain
+			- There are no constraints on the codomain -> it may be equal to or be larger than the range of the transformation
+	- ![[Pasted image 20250329151645.png]]
+- **DEFINE:** Bijective mapping
+	- A bijective mapping $T : \mathbb{R}^n \to \mathbb{R}^m$ is bijective if it is both onto and one-to-one
+	- Every $\mathbf{x}$ maps to a unique $\mathbf{b}$ in the codomain $\mathbb{R}^m$
+	- Every $\mathbf{b}$ has a solution $\mathbf{x}$
+	- The range = the codomain
+- Matrix specific theorems -> Let $T : \mathbb{R}^n \to \mathbb{R}^m$ be a linear transformation, and $A$ be standard matrix for $T$
+	- $T$ maps $\mathbb{R}^n$ onto $\mathbb{R}^m$ if and only if the columns of $A$ span $\mathbb{R}^m$
+		- Onto -> range = codomain
+		- If our columns (vectors) span the entire output codomain, then our output (range) = codomain
+	- $T$ is one-to-one 
+		- One-to-one -> map every $\mathbf{x}$ to a unique $\mathbf{b}$ in the codomain
+		- If and only if the equation $T(\mathbf{x}) = \mathbf{0}$ has only the trivial solution
+			- This means we don't have free variables, and no extra vectors that contribute to the span of the matrix $A$
+			- Therefore it's not possible to get multiple solutions, because we'd need free variables/redundant vectors to get multiple solutions
+		- If and only if the columns of $A$ are linearly independent
+			- Linearly independent vectors ensure a unique solution, because no extra vectors contribute to span of matrix $A$
+			- Therefore it's not possible to get multiple solutions, because we'd need free variables/redundant vectors to get multiple solutions
