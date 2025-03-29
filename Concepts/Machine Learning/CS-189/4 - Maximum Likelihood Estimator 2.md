@@ -34,3 +34,45 @@
 		- Note that $H(P_{\hat{\theta}})$ is a constant with respect to $\theta$, which we actually change
 		- Therefore we're left with 
 			- $D_{KL}(P_{\hat{\theta}} \parallel P_{\theta}) = H(P_{\hat{\theta}}, P_{\theta})$
+# What about MLE for regression/classification?
+- Given data $\mathcal{D} = \{ (\text{x}_{1}, y_{1}), \dots, (\text{x}_{N}, y_{N}) \}$
+- Assume a set (family) of distributions on $(\text{x}, y)$
+	- $\{ P_{\theta} : \theta \in \Theta \}$
+		- The distribution answers the question, what's the probability of getting $P(\text{x}, y)$
+	- $P_{\theta}(\text{x}, y) = P(\text{x})P_{\theta}(y | \text{x})$
+		- $\text{x}$ comes from some fixed distribution
+- Parameters $\theta$ only dictate the conditional distribution of $y$ given $\text{x}$
+- Objective/definition remains the same
+	- $$\large \begin{align} \\
+		\underset{ \theta }{ \arg \max } \prod_{i}^N  P(\text{x}_{i})P_{\theta}(y_{i} \mid \text{x}_{i}) &= \underset{ \theta }{ \arg \max }  \sum_{i}^N [\log P(\text{x}_{i}) + \log P_{\theta}(y_{i} \mid \text{x}_{i})] \\
+		&= \underset{ \theta }{ \arg \max } \sum_{i}^N \log P_{\theta}(y_{i} \mid \text{x}_{i})
+		\end{align}
+		$$
+	-  **NOTE:** We can eliminate $\log P(\text{x}_{i})$ because it's a constant
+# Example: "least squares" linear regression
+- We are given data $\mathcal{D} = \{ (\text{x}_{1}, y), \dots, (\text{x}_{N}, y_{N}) \}$
+	- $\text{x}$ = $d$-dimensional vector
+	- $y$ = real value
+- Assume that output given the input is generated i.i.d. as
+	- $Y \mid X \sim \mathcal{N}(\hat{w}^TX + \hat{b}, \sigma^2)$
+	- $Y = \hat{w}^TX + \hat{b} + \epsilon$, where $\epsilon \sim \mathcal{N}(0, \sigma^2)$
+		- Can imagine $\epsilon$ is a noise that's added to the original linear equation
+	- **NOTE:** $\hat{w}$ and variable with hats moving forward mean the true value
+		- This is the opposite of traditional statistic conventions, which assign hat variables as the sample parameters, and non-hat variables as the true parameters
+	- $\sigma^2$ is a true parameter value, but we don't really care about it
+- We don't need to specify the input distribution since it does not depend on $\theta$
+- The objective is
+	- $$\huge \begin{align}
+		&\underset{ \theta \in \Theta }{ \arg \max } \sum_{i}^N \log \mathcal{N}(y_{i}; w^T\text{x}_{i} + b, \sigma^2) \\ \\
+		&= \underset{ \theta \in \Theta }{ \arg \max } \sum_{i}^N - \frac{1}{2\sigma^2}(w^T x_{i} + b - y_{i})^2 + C_{\text{w.r.t. } \theta}
+		\end{align}$$
+	- $\theta = [w, b]$
+		- Parameters of our linear function, that we then set as the mean for our Gaussian distribution behind our data set
+	- $\Theta =$ all possible $[w, b]$
+# MLE typically requires (iterative) optimization
+- For examples we have seen so far, MLE can be obtained in closed form
+- We will see many examples where this is not the case
+- In such cases, rely on **iterative optimization**
+	- Start with guess
+	- Continually refine "guess" of MLE until we are satisfied
+- One can take entire series of classes on iterative optimization

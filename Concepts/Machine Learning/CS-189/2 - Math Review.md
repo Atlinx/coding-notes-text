@@ -89,14 +89,14 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 	- Tend to denote different entries in vectors, matrices, etc.
 - $u = [u_{1}, \dots, u_{d}]$
 	- $u$ is a $d$-dimensional row vector
-- $v = \begin{bmatrix}v_{1} \\ \vdots \\ v_{k} \end{bmatrix}$
-	- $v$ is a $k$-dimensional column vector
-- $\mathcal{L}_{p}$-norm
-	- $||u||_{p} = (\sum_{i} |u_{i} |^p)^{1/p}$
+- $\text{v} = \begin{bmatrix}v_{1} \\ \vdots \\ v_{k} \end{bmatrix}$
+	- $\text{v}$ is a $k$-dimensional column vector
+- $l_{p}$-norm
+	- $$\huge \lVert \text{u} \rVert_{p} = (\sum_{i} |u_{i} |^p)^{\normalsize \dfrac{1}{p}}$$
 	- LP norm of some vector $u$ is sum of all entries
 	- $l_{1}$ norm
 		- $=\sum_{i} |u_{i}|$
-	- $l_{2}$ norm
+	- $l_{2}$ norm ^l2-norm
 		- $= \sqrt{ \sum_{i} u_{i}^2 }$
 		- AKA distance formula
 - Matrices
@@ -104,9 +104,9 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 	- Square matrix -> $n = m$
 	- Symmetric matrix $a_{ij} = a_{ji}$
 		- $A = A^T$
-	- Positive semidefinite (PSD) matrix
+	- Positive semidefinite (PSD) matrix ^psd-matrix
 		- A square and symmetric matrix $A$ for which
-			- $x^T A x \geq 0$ for all $x$
+			- $\text{x}^T A \text{x} \geq 0$ for all $\text{x}$
 			- If $A$ is $n \times n$, then $x$ is any $n$ dimensional column vector
 			- Don't really distinguish between row vector and column vectors, depending
 - Trace of a square matrix
@@ -179,9 +179,9 @@ H(P, Q) &= - \sum_{x} P(X = x) \log Q(X = x) \\ \\
 	- Hessian matrix is denoted as $H_{i,j}$
 	- $$\huge H(f) = J(\nabla f) = \nabla^2 f = \begin{bmatrix} f_{x_{1}x_{1}} &f_{x_{1}x_{2}} &\dots &f_{x_{1}x_{n}} \\ f_{x_{2}x_{1}} &f_{x_{2}x_{2}} &\dots & f_{x_{2}x_{n}}\\ \vdots &\vdots &\ddots &\vdots \\ f_{x_{n} x_{1}} &f_{x_{n} x_{2}} &\dots &f_{x_{n} x_{n}} \end{bmatrix}$$
 		- This matrix is square and symmetric
-		- For convex functions, its Hessian is positive semi-definite
+		- For convex functions, its Hessian is positive semidefinite
 	- $H_{i,j} = \dfrac{ \partial^2 f }{ \partial x_{i} \partial x_{j} }$
 		- This is a matrix of second-ordered mixed partials of a scalar field
 		- [Mixed partial derivatives](https://tutorial.math.lamar.edu/classes/calciii/highorderpartialderivs.aspx)
 	- Note, this is not the same as entropy (even though they both are denoted using $H$)
-- [Matrix cookbook](https://math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
+# [Matrix cookbook](https://math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf) ^matrix-cookbook
