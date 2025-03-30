@@ -223,12 +223,48 @@ Machine learning
 \huge f(x, \theta) = y
 \end{align}
 $$
-	- $x =$ inputs
+	- $x =$ input
 	- $\theta$ = parameters -> these are learned
 	- $y$ = output
 		- **Ex.** label
 
+Shallow learning
+?
+- AKA "feature-based learning"
+	- Traditionally, we trained shallow neural network
+	- Learning directly from the input using these models is hard
+- Rather than processing the input $x$ outright, let's try to simplify it first
+- $\phi(x)^T \theta \leq 0$
+	- Let $\phi(x)$ be a fixed function that extracts features from $x$
+		- Features -> extracting edges, corners from image, etc.
+		- Features can potentially simply $x$ and make it easier to use -> maybe instead of inputting an 100 x 100 image, we can extract 10 features
+- ![[Pasted image 20250206173317.png]]
 
+Shallow layer to deep learning
+?
+- What if we learned parameters to the features?
+- Our model has many layers of features
+	- ![[Pasted image 20250206174730.png]]
+- Each arrow represents a simple parameterized transformation (function) of the preceding layer
+- The actual representation used by deep learning
+	- Lowest level features look like edges
+	- Higher level features look like parts
+
+End-to-end learning
+?
+- Training every layer with respect to overall task objective
+
+We can see the more layers, the {{better}} the performance
+?
+- Lower errors
+
+Deep learning
+?
+- Machine learning with multiple layers of learned representations
+- The function that represents the transformation from input to internal representation to output is usually a deep neural network
+	- Almost all **multi-layer parametric functions** with learned parameters can be called neural networks
+- Parameters for every layer are usually trained with respect to overall task objective (**Ex.** accuracy in detecting puppies)
+	- Sometimes referred to as end-to-end learning
 
 What makes modern machine learning work?
 ?
@@ -238,3 +274,36 @@ What makes modern machine learning work?
 	- Humans also learn from a large amount of data
 3. Enough **compute** to handle all this
 	- Can't wait for years to years for training
+
+Model capacity
+?
+- (informally) How many different functions a particular model class can represent
+- **Ex.** Linear decision boundaries vs. non-linear boundaries
+
+Underlying themes of deep learning
+?
+- Benefits of acquiring representations using high-capacity models and lots of data
+- Learning vs. inductive bias
+-  Algorithms that scale
+
+Benefits of acquiring representations using high-capacity models and lots of data
+?
+- Automation
+	- We don't need to know what the good features are, can have model figure it out from data
+- Better performance
+	- When representations are learned end-to-end, they are better tailored to the current task
+
+Learning vs. inductive bias
+?
+- Models get most performance from data rather than from designer insight
+- Should we build in knowledge, **or** better machinery for learning and scale?
+
+Inductive bias
+?
+- What we build into the model to make it learn effectively
+- (informally) Built-in knowledge or biases in a model designed to help it learn
+	- All knowledge is "bias" -> makes some solutions more likely and some less likely
+
+Scaling
+?
+- (informally) Ability for an algorithm to work better as more data and model capacity is added

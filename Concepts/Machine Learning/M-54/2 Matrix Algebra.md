@@ -270,7 +270,7 @@
 		- $\text{Col } A = \text{Span} \{ \mathbf{a}_{1}, \dots, \mathbf{a}_{n} \}$
 	- $\text{Col } A = \mathbb{R}^m$ only when the $\text{Span} \{ \mathbf{a}_{1}, \dots, \mathbf{a}_{n} \} = \mathbb{R}^m$
 - **DEFINE:** Null space ^null-space
-	- Null space of an $m \times n$ matrix $A$ is the set $\text{Nul } A$ of all solutions of the homogeneous equation $A \mathbf{x} = \mathbf{0}$
+	- Null space of an $m \times n$ matrix $A$ is the set $\text{Nul } A$ of all solutions of the [[1 Linear Equations#^homogenous|homogeneous equation]] $A \mathbf{x} = \mathbf{0}$
 		- Consider $A \mathbf{x} = \mathbf{0}$
 		- All possible $\mathbf{x}$ in the equation above form the null space of $A$
 	- Null space is a subset of $\mathbb{R}^n$
@@ -283,5 +283,53 @@
 		- $\mathbf{e}_{1} = \begin{bmatrix}1 \\ 0 \\ \vdots \\0\end{bmatrix}\hspace{1em}\mathbf{e}_{2} = \begin{bmatrix}0 \\1 \\ \vdots \\ 0\end{bmatrix} \hspace{1em} \dots \hspace{1em} \mathbf{e}_{n} = \begin{bmatrix}0 \\ \vdots \\0 \\1\end{bmatrix}$
 		- Standard basis for $\mathbb{R}^n = \{ \mathbf{e}_{1}, \dots, \mathbf{e}_{n} \}$
 - Finding a basis for the null space of a matrix
-	- Perform [[1 Linear Equations#The Row Reduction Algorithm|row-reduction]] to get matrix into reduced row-echelon form
+	- Perform row-reduction to get matrix into reduced row-echelon form
 	- Write the solution in [[1 Linear Equations#Parametric Vector Form|parametric vector form]].
+	- The set of vectors in the parametric vector form generates $\text{Nul } A$
+		- $\mathbf{0} = x_{1} \mathbf{u}_{1} + x_{2} \mathbf{u}_{2} + \dots + x_{n} \mathbf{u}_{n}$
+- Finding basis for column space of matrix
+	- The pivot columns of $A$ form the basis for $\text{Col } A$
+		- We can find the pivot positions by reducing $A$ into an echelon form
+		- Then take the columns of $A$ at those same pivot positions to form the basis for the column space of $A$
+	- **NOTE:** Make sure to use the pivot columns of $A$ itself, rather than the columns of the an echelon form
+		- Echelon forms have the same solutions but not necessarily the same column space
+# 2.9 Dimension and Rank
+## Coordinate Systems
+- **DEFINE:** Coordinates
+	- Suppose set $\mathcal{B} = \{ \mathbf{b}_{1}, \dots, \mathbf{b}_{p} \}$ is a basis for a subspace $H$
+	- For each $\mathbf{x}$ in $H$, the **coordinates** of $\mathbf{x}$ relative to the basis $\beta$ are the weights $c_{1}, \dots, c_{p}$ such that
+		- $\mathbf{x} = c_{1}\mathbf{b}_{1} + \dots + c_{p} \mathbf{b}_{p}$ and the vector in $\mathbb{R}^p$
+	- The vector in $\mathbb{R}^p [\mathbf{x}]_{\beta}$ is called the **coordinate vector of $\mathbf{x}$ (relative to $\beta$)** or the **$\beta$-coordinate vector of $\mathbf{x}$**
+		- $$\large [ \mathbf{x} ]_{\beta} = \begin{bmatrix}c_{1} \\ \vdots \\ c_{p}\end{bmatrix}$$
+- ![[Pasted image 20250329194533.png]]
+	- In the example above correspondence between $\mathbf{x} \mapsto [ \mathbf{x} ]_{\beta}$ is a one-to-one correspondence between the subspace $H$ and $\mathbb{R}^2$
+	- We call this correspondence an **isomorphism**
+		- $H$ is **isomorphic** to $\mathbb{R}^2$
+- In general, if $\beta = \{ \mathbf{b}_{1}, \dots, \mathbf{b}_{p} \}$ is a basis for $h$, then the mapping $\mathbf{x} \to [\mathbf{x}]_{\beta}$ is a one-to-one correspondence that makes $H$ look and act the same as $\mathbb{R}^p$
+	- Even though the vectors in $H$ themselves may have more than $p$ entries
+## Dimension of Subspace
+- **DEFINE:** Dimension ^dimension
+	- Dimension of a nonzero subspace $H$ is the number of vectors in any basis for $H$
+	- This is denoted by $\dim H$
+	- The dimension of the zero subspace $\{ \mathbf{0} \}$ is defined to be zero
+- Every basis for $\mathbb{R}^n$ consists of $n$ vectors
+- A plane through the origin in $\mathbb{R}^3$ is two-dimensional
+- A line through in the origin in $\mathbb{R}^3$ is one-dimensional
+- **DEFINE:** Rank ^rank
+	- Rank of matrix $A$ is the dimension of the column space of $A$
+	- This is denoted by $\text{rank } A$
+- **DEFINE:** Rank theorem ^rank-theorem
+	- If a matrix $A$ has $n$ columns, then $\text{rank } A + \dim \text{Nul } A = n$
+- **DEFINE:** Basis theorem ^basis-theorem
+	- Let $H$ be a $p$-dimensional subspace of $\mathbb{R}^n$
+	- Any linearly independent set of exactly $p$ elements in $H$ is automatically a basis for $H$
+	- Any set of $p$ elements of $H$ that spans $H$ is automatically a basis for $H$
+## Rank and the Invertible Matrix Theorem
+- **DEFINE:** Invertible matrix theorem (continued)
+	- Let $A$ be an $n \times n$ matrix. The following statements are each equivalent to the statement that $A$ is an invertible matrix.
+	- The columns of $A$ form a basis of $\mathbb{R}^n$
+	- $\text{Col }A = \mathbb{R}^n$
+	- $\dim \text{Col } A = n$
+	- $\text{rank } A = n$
+	- $\text{Nul } A = \{ \mathbf{0}\}$
+	- $\dim \text{Nul } A = 0$

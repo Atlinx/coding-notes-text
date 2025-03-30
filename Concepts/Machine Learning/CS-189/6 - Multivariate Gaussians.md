@@ -19,6 +19,10 @@
 	- $\Sigma_{ij} = \text{cov}(X_{i}, X_{j}) = \mathbb{E}[(X_{i} - \mathbb{E}[X_{i}])(X_{j} - \mathbb{E}[X_{j}])]$
 - For Gaussian RVs (random variables) $X_{i}, X_{j}$, the two variables are $X_{i} \perp X_{i}$ (independent) if, and only if, $\text{cov}(X_{i}, X_{j}) = 0$
 - When we visualize/draw two-dimensional MVGs, we will often draw **level sets** $\{ (x_{1}, x_{2}) : p(x_{1}, x_{2}) = c \}$
+	- Level sets
+		- ![[Pasted image 20250329204321.png]]
+		- Note that level sets are just a 2D representation of what really should be a 3D view:
+			- ![[Pasted image 20250329204334.png]]
 	- How do we visualize higher dimensions? We don't, really...
 	- For MVGs, level sets are ellipsoids
 		- $(\mathbf{x} - \mu)^T \Sigma^{-1}(\mathbf{x} - \mu)= c'$

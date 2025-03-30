@@ -459,7 +459,7 @@ x_{1} &- 7x_{2} &+ 2x_{3} &- 5x_{4} &+ 8x_{5} &= 10 \\
 		- Augmented matrix = $\left[\begin{array}{ccc|c}10 &-3 &-2 &0\end{array}\right]$
 		- Solution is $x_{1} = .3x_{2} + .2x_{3}$
 		- We can rewrite this as
-		- $\mathbf{x} = \begin{bmatrix}x_{1} \\ x_{2} \\ x_{3}\end{bmatrix} = \begin{bmatrix}.3x_{2} + .2x_{3} \\ x_{2} \\ x_{3} \end{bmatrix} = \begin{bmatrix}.3x_{2} \\ x_{2} \\ 0\end{bmatrix} + \begin{bmatrix}.2 x_{3} \\ 0 \\ x_{3}\end{bmatrix} = x_{2} \begin{bmatrix}.3 \\ 1 \\ 0\end{bmatrix} + x_{3}\begin{bmatrix}.2 \\ 0 \\ 1\end{bmatrix}$
+			- $\mathbf{x} = \begin{bmatrix}x_{1} \\ x_{2} \\ x_{3}\end{bmatrix} = \begin{bmatrix}.3x_{2} + .2x_{3} \\ x_{2} \\ x_{3} \end{bmatrix} = \begin{bmatrix}.3x_{2} \\ x_{2} \\ 0\end{bmatrix} + \begin{bmatrix}.2 x_{3} \\ 0 \\ x_{3}\end{bmatrix} = x_{2} \begin{bmatrix}.3 \\ 1 \\ 0\end{bmatrix} + x_{3}\begin{bmatrix}.2 \\ 0 \\ 1\end{bmatrix}$
 			- This is known as "decomposing" $\mathbf{x}$ into a linear combination of vectors, using the free variables $x_{2}, x_{3}$ as parameters
 		- **NOTE:** 
 			- The basic variables equal the equation we found with respect to the free variables
