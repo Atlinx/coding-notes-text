@@ -127,14 +127,14 @@
 		- If you can learn $p(x, y)$, you can recover $p(y | x)$ by reordering the formula
 - $$\huge p(y|x) = \dfrac{p(x, y)}{p(x)}$$
 	- Definition of conditional probability
-	- "Discriminative learning" -> learning $P(y|x)$ directly
+	- "Discriminative learning" -> learning $P(y|x)$ directly ^discriminative-learning
 		- Goal is to discriminate between different $y$
 
 ## How Do We Represent It?
 ![[Pasted image 20250206211919.png]]
-- Output object probability instead of labels
+- In supervised learning, models output probabilities of getting each label, instead of just the labels
 	- Valid probability distribution
-		- Outputs must be from 0 to 1
+		- Outputs must be from 0 to 1 (positive)
 		- Outputs must sum to 1
 	- **Ex.** Recognizing 10 digits -> 10 possible labels -> output 10 numbers
 - Our new program should return the probabilities of $y$ given an input $x$
@@ -305,7 +305,7 @@ $$
 		- If we randomly sampled the set of all possible data-points to form our data-set, the probability of getting our specific data-set should be relatively high 
 		- Data-points that appear more often in the population should appear more often in our sample
 			- It would be extremely unlikely for our sample to be filled with really rare data-points if we used random-sampling (which we must have used if we assume data points are $\text{i.i.d.}$)
-- Idea -> choose $\theta$ such that we maximize
+- Idea -> choose $\theta$ such that we maximize ^maximize-pd
 	- $$\huge p(\mathcal{D}) = \prod_{i} p(x_{i}) p_{\theta}(y_{i} | x_{i})$$
 	- Problem
 		- $p(x_{i})$ -> Multiplying together many numbers $\leq 1$
@@ -339,6 +339,7 @@ $$
 	- This is our loss function!
 # Loss Function
 - In general
+	- $$\huge \mathcal{L}(\theta) =\mathcal{L}(\theta, x, y)$$
 	- Loss function quantifies how bad $\theta$ is
 	- We want the least bad $\theta$
 		- This is the best $\theta$
