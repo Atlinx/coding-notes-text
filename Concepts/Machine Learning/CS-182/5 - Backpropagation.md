@@ -227,4 +227,47 @@
 		- $b^{(i)}$ are now additional parameters in the neural network
 	- **NOTE:** This has nothing to do with the bias/variance bias
 ## What else do we need for backprop?
-- 
+- Need to calculate derivatives for each module
+	- Linear layer
+	- Softmax + cross-entropy
+	- Sigmoid
+	- ReLU
+## Backpropagation recipes: linear layer
+- ![[Pasted image 20250404013726.png]]
+- Linear layer is $z^{(i + 1)} = W^{(i)}a^{(i)} + b^{(i)}$
+	- $z = Wa +b$
+		- Drop superscripts for notational convenience
+	- $\theta_{f}$ = parameters are $W$ and $b$
+	- $x_{f} = a$ input
+	- Output is a column vector $z$
+	- Input is a column vector $a$
+	- Parameters is matrix $W$, which has each row set to the weight for the $i^{th}$ entry/row in the output vector
+- Calculating derivatives with respect to $W$
+	- When we take the derivative of the vector $z$ with respect to the matrix $W$, we create a "cube"
+		- This cube is made of $\dim(z)$ slices
+			- Each slice is multiplied against a slice from the $\delta$
+	- We get
+		- $\huge \dfrac{dz}{dW} \delta = \sum_{i} \dfrac{dz_{i}}{dW} \delta_{i}$
+			- This gives us derivative of output $z$, with respect to all the weights $W$
+- Calculating derivatives with respect to $b$
+	- $\huge \dfrac{dz}{db} \delta = \mathbf{I} \delta = \delta$
+	- $z_{i} = \sum_{k} W_{ik} a_{k} + b_{i}$
+		- $\dfrac{dz_{i}}{db_{j}} = \text{Ind}(i = j)$
+			- $\text{Ind}(i = j)$ -> means that the value is 1 when $i = j$, and 0 otherwise
+		- This makes sense, because when we take derivative of 
+- Calculating derivatives with respect to input $a$
+	- $\huge \dfrac{dz}{da} \delta = W^T \delta$
+	- $z_{i} = \sum_{k} W_{ik} a_{k} + b_{i}$
+		- $\dfrac{dz_{i}}{dz_{k}} = W_{ik}$
+		- $\dfrac{dz}{da} = W^T$
+- ![[Pasted image 20250404021037.png]]
+	- TODO: Understand vector calculus more before revisiting this
+## Backpropagation recipes: sigmoid
+- ![[Pasted image 20250404113154.png]]
+
+>[!note]
+>Because we are using binary classification, we can omit one of the $z_{i}$ in the denominator
+## Backpropagation recipes: ReLU
+- ![[Pasted image 20250404113320.png]]
+## Summary
+- ![[Pasted image 20250404113402.png]]

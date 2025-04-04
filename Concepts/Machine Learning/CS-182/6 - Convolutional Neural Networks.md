@@ -1,0 +1,240 @@
+# 6 Convolutional Neural Networks
+## Neural network with images
+- ![[Pasted image 20250404113646.png]]
+- Image is 128 x 128 x 3 = 49152
+- $z^{(1)}$ is 64 dimensional
+- Parameters is $64 \times 49,152 \approx 3,000,000$
+	- We need a better way to process the image!
+## An idea...
+- Use features?
+	- ![[Pasted image 20250404113919.png]]
+	- Edge detectors?
+	- Ears, noses?
+- Observation -> many useful image features are local
+	- To tell if a particular patch of image contains a feature, it's enough to just look at the patch
+- $z^{(1)}$ is 64-dimension
+	- $64 \times 27 = 1728$
+	- We get a different output at each image location
+- Convolution
+	- "mini-layer" -> **filter**
+		- ![[Pasted image 20250404114500.png]]
+		- A $3 \times 3 \times 3$ box that we slide over the image and output local features 
+			- This contains different weights that we tweeak
+			- **NOTE:** There are 3 color channels, and the box is 3 x 3
+		- We can stack together filters to change the depth of our output size
+		- What do the "features" look like?
+			- ![[Pasted image 20250404114652.png]]
+	- After a "convolution" we apply a non-linear activation function afterwards
+		- Often times this activation function is omitted
+- Max pooling
+	- Problem -> the output is still as big as the original image!
+	- Solution
+		- ![[Pasted image 20250404114811.png]]
+		- Take max for each channel in non-overlapping regions
+			- Essentially down sampling
+		- We only care about the most "important" features in the region
+	- ![[Pasted image 20250404115022.png]]
+		- Builds a smaller output
+- We can chain convolutions + max poolings
+	- Size of pooling can change, number of filters can change
+	- ![[Pasted image 20250404115142.png]]
+		- Blue -> convolution operation
+		- Yellow -> pooling
+## What does a real conv net look like?
+- ![[Pasted image 20250404115219.png]]
+- Subsampling -> same as pooling
+# Implementing convolutional layers
+## Summary
+- Convolutional layer
+	- ![[Pasted image 20250404115553.png]]
+	- Way to avoid needing millions of parameters with images
+	- Each layer is "local"
+	- Each layer produces an "image" with roughly same width & height
+	- Number of channels = number of filters
+- Pooling
+	- ![[Pasted image 20250404115559.png]]
+	- If we want to get down to a single output, we must reduce resolution as we go
+	- Max pooling -> downsample "image" at each layer, taking the max in each region
+	- Makes it robust to small translation changes
+- Finishing it up
+	- At the end, get something small enough that we can "flatten it" and feed it into a full connected linear layer
+## ND arrays/tensors
+- All operations will involve $N$ dimensional arrays
+- Often used synonymously with tensor
+- Input image -> $\text{HEIGHT} \times \text{WIDTH} \times \text{CHANNELS}$
+- Filter -> $\text{FLT.HEIGHT} \times \text{FLT.WIDTH} \times \text{OUTPUT CHAN} \times \text{INPUT CHAN}$
+	- Filters are actually four dimensional
+	- We tend to omit the $\text{INPUT CHAN}$ in practice because we imply that the filters always process the entire depth of the input
+		- Therefore we write filters as $\text{FLT.HEIGHT} \times \text{FLT.WIDTH} \times \text{OUTPUT CHAN}$
+- Activations -> $\text{HEIGHT} \times \text{WIDTH} \times \text{LAYER.CHANNELS}$
+- ![[Pasted image 20250404115851.png]]
+- "inner" rightmost dimensions work just like vectors/matrices
+- Matching "outer" dimensions are treated as "broadcast" (element-wise) operations
+- Convolution operation
+	- Perform tiny matrix multiply at each position of the filter
+		- Tiny linear layer at each position
+## Convolutional layer in equations
+- ![[Pasted image 20250404120144.png]]
+	- $W^{(2)}$ is dimension of the filter
+	- $H_{\text{in}}$ is dimension of the input
+	- $H_{\text{out}}$ is dimension of the output
+- Expressing this as the output in every point in the output
+	- ![[Pasted image 20250404122050.png]]
+	- $z^{(2)}[i,j,k]$ is some point in the output at 2D position $i, j$, and a depth of $k$
+		- We can think of $k$ as selecting the filter we'd like to use
+	- $W^{(2)}[l, m, k, n]$ is some point in the filter, at 2D position $l, m$, using the $k^{th}$ filter, and iterating over the $n$-depth of the input
+		- Remember, a filter takes in tiny "box" within the input
+			- This tiny box is $l \times m \times n$ -> Where $l, m$ is the 2D position in the box, and $n$ is the depth
+- Expressing this as vectors
+	- ![[Pasted image 20250404122616.png]]
+	- $z^{(2)}[i, j]$ is a vector of dimension $C_{\text{out}}$ at some 2D position $i,j$ in the output
+	- $W^{(2)}$ is a $C_{\text{out}} \times C_{\text{in}}$ matrix
+- Activation function applied per element, just like before
+	- ![[Pasted image 20250404123020.png]]
+- In practice, typically implemented with matrix vector multiplication
+	- Tend to be computationally expensive, despite not having a lot of parameters
+## Padding and edges
+- What if we go off the image?
+- Option 1: cut off the edges
+	- ![[Pasted image 20250404123844.png]]
+	- Input -> 32 x 32 x 3
+	- Filter -> 5 x 5 x 6 
+	- Output -> 28 x 28 x 6
+		- **NOTE:** 6 means number of filters (output) in this case
+	- "radius" is $\dfrac{H_{F} - 1}{2}$ on each side $= 2$
+		- Assume we have odd number width and height
+		- If radius goes off the end of the image, it's invalid
+	- $H_{\text{out}}= H_{\text{in}} - \left(\dfrac{H_{F} - 1}{2}\right) \times 2=  28$
+	- Problem -> our activations shrink with every layer
+		- Some people don't like this -> activation maps can get really small at the end of the 
+- Option 2: Zero pad
+	- ![[Pasted image 20250404124103.png]]
+	- Evaluate filter on corners and edges
+	- Points on edge are replaced with 0
+		- Typically before using zero pad, we take average pixel intensity, and subtract it from every pixel
+		- This ensures every pixel is "centered" on the average, with 0 now marking the average pixel intensity
+	- Advantage -> simple, size is preserved
+	- Disadvantage -> weird effect at boundary
+		- Usually not a problem
+## Strided convolutions
+- Standard conv net structure at each layer
+	- Apply convolution -> $H \times W \times C_{\text{in}}$
+	- Apply activation func
+	- Apply pooling
+- First step can be expensive copmutationally
+	- $C_{\text{out}} \times C_{\text{in}}$ matrix multiply at each position in $H \times W$ imge!
+- Strided computation
+	- We skip over some positions
+	- Instead of moving the filter by 1 pixel at a time, move it by $n$ steps
+		- Some people believe strided convolutions are just as good as conv + pooling
+	- The number of steps is called the **stride**
+> [!note] 
+> Strided convolutions is different from max pooling, since we don't calculate the convolution pixels of every position.
+## AlexNet
+- ![[Pasted image 20250404124541.png]]
+- ![[Pasted image 20250404124554.png]]
+- Why is this model important?
+	- "Classic" medium-depth convolutional network design (modernized version of LeNet)
+	- First neural network to achieve state-of-the-art results on ImageNet large-scale visual recognition challenge (ILSVRC)
+	- ILSVRC (Image Net), 2019
+		- ![[Pasted image 20250404124856.png]]
+		- 1.5 million images
+		- 1000 categories
+- Trained model on two GPUs, which is why the diagram is "split"
+	- We don't worry about this nowadays because GPUs have enough memory
+	- Increase in VRAM on GPU was spurred by increase in size of neural networks
+- Diagram
+	- ![[Pasted image 20250404135541.png]]
+		- The pooling layer here also has a stride, which means the pooling regions can overlap
+	- How many parameters in CONV1?
+		- Weights: $11 \times 11 \times 11 \times 3 \times 96 = 34,848$
+		- Biases: $96$
+			- Depends on number of outputs
+		- Total: $34,944$
+- Layers
+	- **CONV1:** 11 x 11 x 96, Stride 4, maps 224 x 224 x 3 -> 55 x 55 x 96, without zero padding
+	- **POOL1:** 3 x 3 x 96, Stride 2, maps 55 x 55 x 96 -> 27 x 27 x 96
+	- **NORM1:** Local normalization layer (not widely used anymore, but we'll talk about normalization later)
+	- **CONV2:** 5 x 5 x 256, Stride 1, maps 27 x 27 x 96 -> 27 x 27 x 256 (**with** zero padding)
+		- More filters than CONV1, because we want to pull out more features
+	- **POOL2:** 3 x 3 x 256, Stride 2, maps 27 x 27 x 256 -> 13 x 13 x 256
+	- **NORM2:** Local normalization layer
+	- **CONV3:** 3 x 3 x 384, Stride 1, maps 13 x 13 x 256 -> 13 x 13 x 384 (**with** zero padding)
+		- We started padding from CONV2 and onward because at smaller scales, we're losing more information
+	- **CONV4:** 3 x 3 x 384, Stride 1, maps 13 x 13 x 384 -> 13 x 13 x 384 (**with** zero padding)
+	- **CONV5:** 3 x 3 x 256, Stride 1, maps 13 x 13 x 256 -> 13 x 13 x 256 (**with** zero padding)
+	- **POOL3:** 3 x 3 x 256, Stride 2, maps 13 x 13 x 256 -> 6 x 6 x 256
+	- **FC6:** 6 x 6 x 256 -> 9,216 -> 4,096  (Matrix is 4096 x 9216)
+	- **FC7:** 4096 -> 4096
+	- **FC8:** 4096 -> 1000
+	- **SOFTMAX**
+- Don't forget -> ReLU nonlinearities after every CONV or FC layer
+- Trained with regularizatioon
+	- Data augmentation
+	- Dropout
+- Local normalization (not used anymore)
+## VGG
+- ![[Pasted image 20250404140854.png]]
+- Why is this model important?
+	- Still often used today
+	- Big increase in **depth** over previous best model
+	- Start seeing "homogenous" stacks of multiple convolutions interspersed with resolution reduction
+- Layers
+	- ![[Pasted image 20250404141338.png]]
+- More layers = more processing, which is why we see repeated blocks
+- Which parts use the most memory?
+	- Earlier layers
+- Which parts have the most parameters?
+	- Most parameters are in the fully connected layers
+	- Not actually a good thing
+## ResNet
+- 152 layers
+- ![[Pasted image 20250404141552.png]]
+	- Better than human level performance
+- Compared to AlexNet and VGG
+- ![[Pasted image 20250404141615.png]]
+- Structure
+	- ![[Pasted image 20250404141632.png]]
+	- Many convolutional layers between each pooling
+- Simpler 18-layer prototype
+	- ![[Pasted image 20250404141713.png]]
+	- Filters go up by a factor of 2
+		- Can actually oAmit fully connected blocks
+			- Most processing is done in convolutional layers
+		- Getting ride of fully connected blocks would save on parameters that could be used for adding more layers and filters
+	- For the last convolutional layer we take the average pool
+		- Average feature vectors at every location and convert it into a single vector of length = 512 (number of filters) 
+- CIFAR-10 experiments
+	- ![[Pasted image 20250404142116.png]]
+	- Standard convolutional neural networks
+		- Error rate initially decrease up till 20ish layers
+		- Afterwards, error rate increases as number of layers increase
+	- ResNet inverses this trend
+		- Larger layers push down the error, always
+## What's the main idea?
+![[Pasted image 20250404142550.png]]
+- We can add input to the result of two weighted layers
+## Why are deep networks hard to train?
+ - ![[Pasted image 20250404142838.png]]
+ - If we multiple many many numbers together, what will we get?
+	 - If most numbers are $< 1$, we get $0$
+		 - When we multiple two numbers $< 1$, we get a smaller number
+	- If most numbers are $> 1$, we get infinity
+		- When we multiple 2 numbers $> 1$, we get a larger number
+	- We only get a reasonable answer if the numbers are all close to $1$
+		- ![[Pasted image 20250404142845.png]]
+			- This is why we prefer ReLU, because its derivative is either 0 or 1
+- For matrices, this means we want $J_{i} \approx \mathbf{I}$
+- ![[Pasted image 20250404143300.png]]
+- Plain net
+	- $\dfrac{dH}{dx}$
+	- Derivative could be big or small
+	- Not close to $\mathbf{I}$
+- Residual net
+	- $\dfrac{dH}{dx} = \dfrac{dF}{dx} + \mathbf{I}$
+	- If weights are not too big, $\dfrac{dF}{dx}$ will be smallish
+## ResNet Summary
+- "Generic" blocks with many layers, interspersed with a few pooling operations
+- No giant FC layer at end, just mean pool over all all x/y positions and smallish FC layers
+- Residual layers provide for good gradient flow
+	- Skipping
