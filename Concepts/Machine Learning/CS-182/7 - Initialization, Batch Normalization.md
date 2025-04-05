@@ -1,0 +1,316 @@
+# 1 Initialization, Batch Normalization
+# Batch Normalization
+- Help! My network doesn't train
+- Even if you train for a long time
+	- There is a good chance it still won't work
+	- Neural networks are messy
+	- Require lots of "tricks" to train well
+- Agenda
+	- Normalizing input s and outputs
+	- Normalizing activations
+	- Initializing weight matrices and bias vectors
+	- Gradient clipping
+	- Best practices for hyperparameter optimization
+	- Ensembling, dropout
+## Dangers of big inputs, activations
+- ![[Pasted image 20250404144226.png]]
+- Easy case on left
+- Hard case on right
+	- 1st dimension is bigger
+		- Larger numerical value
+	- Information represented by information may be the same
+- Derivatives will be very different in magnitude
+	- Gradient will get scaled by big x values
+- ![[Pasted image 20250404144323.png]]
+- In general
+	- We want all entries in $x$ to be roughly same scale
+	- Sometimes not a problem
+		- Images -> all pixels in roughly $[0, 1]$ or $[0,\dots, 255]$
+		- Discrete inputs (NLP) -> inputs are all one-hot vectors
+	- Sometimes a huge problem
+		- Forecast the weather
+		- Temperature, somewhere 40 - 100?
+		- Humidity -> somewhere 0.3 - 0.6?
+- What do we do?
+	- **Standardization** -> transform inputs so they have $\mu = 0, \sigma = 1$
+		- ![[Pasted image 20250404144535.png]]
+	- To make $\mu = 0: \bar{x}_{i}  = x_{i} - \mathbb{E}[x]$
+		- $\mathbb{E}[x] = \frac{1}{N} \sum_{i = 1}^N x_{i}$
+		- $\bar{x}_{i}$ is our new transformed input
+	- To also make $\sigma = 1: \bar{x}_{i} = \dfrac{x_{i} - \mathbb{E}[x]}{\sqrt{ \mathbb{E}[(x_{i} - \mathbb{E}[x])^2] }}$
+		- The denominator is the standard deviation, which effectively scales it
+	- Standardization is also useful for transforming outputs for regression?
+		- What about activations?
+## Standardizing activations?
+- ![[Pasted image 20250404145127.png]]
+- What if we start getting really different scales for each dimension in the middle?
+	- Can we standardize activations too?
+	- Yes, but mean and standard deviation of the activation vector may change during training
+-  Basic idea -> compute same values (mean, standard deviation) as before
+	- ![[Pasted image 20250404145104.png]]
+	- However they now depend on parameters of the network
+	- **Problem** -> after every gradient step we have to go through every data point to calculate the mean and standard deviation
+		- Remember, we're already using minibatches to calculate loss
+		- Therefore, we should use minibatches for standardization as well
+## Batch normalization (basic version)
+- ![[Pasted image 20250404150831.png]]
+- We compute mean and standard deviation
+- In the real version of batch normalization, we also have two additional parameters
+	- $\gamma$ -> scales activation into a range we want
+	- $\beta$ -> offset the activation range (bias)
+	- These are learnable parameters (will be trained)
+## Batch normalization "layer"
+- ![[Pasted image 20250404151434.png]]
+- Can think of batch normalization as a layer that we add after the activation function 
+- How to train?
+	- Just use backpropagation!
+	- Calculate derivatives with respect to parameters and input $a_{ij}$
+## Where to put back normalization?
+- ![[Pasted image 20250404151524.png]]
+- Conventionally, we put it after every linear layer, but we can put it before or after non-linear function
+	- Afterwards
+		- ![[Pasted image 20250404151745.png]]
+		- Scale and bias seem to be redundant
+			- Next linear layer already has a scale (in its weights) and biases
+		- All ReLU outputs are positive
+	- Before
+		- ![[Pasted image 20250404151752.png]]
+		- "Classic" version
+		- Just appears as a transformation on the preceding linear layer
+- No one seems to agree what right way to do it is
+## A few considerations about batch norm
+- ![[Pasted image 20250404152004.png]]
+- Often use **larger** learning rate with batch norm
+- Models with batch norm can train much **faster**
+- Generally requires less regularization (doesn't need dropout)
+- Very good idea in many cases
+- After training network with batch norm
+	- Compute $\mu$ and $\sigma$ on whole data set, and freeze them
+	- Then we can "bake in" the batch norm parameters with
+		- The next linear layer if it occurs after activation function
+		- The previous linear layer if it occurs before activation function
+# Weight Initialization
+- We want overall scale of activations in network to not be too big or too small for the initial (randomized) weights so gradients propagate well
+- Basic intialization
+	- Ensure activations are on reasonable scale, and scale of activations doesn't grow or shrink in later layers as we increase number of layers
+- More advanced initialization methods
+	- Do something about eigen values of Jacobians
+- More advanced initialization methods
+	- Try to do something about eigen values of Jacobians -> try to keep Jacobians' eigen values close to 1
+	- ![[Pasted image 20250404152810.png]]
+## Basic initialization
+- Ideally initialize in the optimal point, but we don't know where it is?
+- Goal -> not to start at a good solution, but have well-behaved gradients and activations
+- Simple choice -> gaussian random weights
+	- $W_{jk}^{(i)} \sim \mathcal{N}(0, 0.0001)$
+	- As network gets deeper, this gives us bad answers
+		- The numbers get smaller with more and more layers
+		- ![[Pasted image 20250404153045.png]]
+			- Blue curve shows mean
+			- Red curve shows standard deviation
+			- Plots on bottom, shows a histogram of each layer
+		- We can see there is no variability in future functions, it's become 0
+		- Recall $\delta = \delta a^{(i - 1)^T}$
+			- Therefore if $a = \mathbf{0}$, then our entire gradient becomes $\mathbf{0}$
+- Gaussian
+	- ![[Pasted image 20250404155234.png]]
+	- Our weights are sampled from a normal distribution
+		- $x \sim \mathcal{N}(0, 1)$
+	- Our bias is approximately 0
+## Basic initialization
+- $$\huge \mathbb{E}[z_{i}^2] = \sum_{j} \mathbb{E}[W^2_{ij}]\mathbb{E}[a_{j}^2] = D_{a} \sigma_{W}^2 \sigma_{a}^2$$
+	- $D$ is dimensionality of input $a$
+	- $\mathbb{E}[z_{i}^2]$ = variance of the $z_{i}$
+		- **NOTE:** We got this variance equation from
+			- $$\begin{align}
+				\text{Var}(X) &= \mathbb{E}[(X - \mu)^2] \\
+				&= \mathbb{E}[(X - 0)^2] \\
+				&= \mathbb{E}[X^2]
+				\end{align}$$
+			- Recall our mean is $0$
+- Basic principle: Get standard deviation of $W_{ij}$ to be about $\dfrac{1}{\sqrt{ D_{a} }}$
+	- AKA "Xavier" initialization
+	- ![[Pasted image 20250404155402.png]]
+	- However, variance still shrinks -- although not as much
+		- Why?
+## Little detail: ReLUs
+- $a_{j} = \text{ReLU}(z_{j})$
+- "negative half" of 0-mean activations is removed!
+	- ReLU zeroes out activations the portions that lie on the left
+	- About half of the activations will be zeroed out
+	- ![[Pasted image 20250404160052.png]]
+- Instead, we can make standard deviation about 2-times bigger to compensate
+	- Proposed in ResNet
+- **NEW** Basic principle: Get standard deviation of $W_{ij}$ to be about $\dfrac{1}{\sqrt{ \frac{1}{2} D_{a} }}$
+	- ![[Pasted image 20250404160131.png]]
+	- Now the variance stays roughly the same, because we compensate for the half lost from ReLU
+## Littler detail: ReLUs & biases
+- ![[Pasted image 20250404160326.png]]
+- Half of our units (on average) will be 'dead"
+	- Output entries forced to zero will have a zero gradients
+	- Common to initialize biases to 0.1 or a small constant
+		- **NOTE:** If we add a bias it might not work as well with the $\frac{1}{2}$ technique from ResNet
+## Advanced initialization
+- Derivative of loss is product of Jacobian matrix between the layer and the loss
+	- ![[Pasted image 20250404161237.png]]
+	- If we multiply many numbers toegether
+		- If most numbers < 1, we get 0
+		- If most numbers > 1, we get infinity
+		- We want Jacobian matrices to be roughly one
+- For each $J_{i}$, we can write $J_{i} = U_{i} \Lambda_{i} V_{i}$
+	- $\Lambda_{i} =$ diagonal matrix with same eigen values as $J_{i}$
+		- This scales the vector
+	- $U_{i}, V_{i} =$ Scale-preserving transformations
+		- They only rotate the vector
+	- ![[Pasted image 20250404161547.png]]
+		- We want to eliminate the scaling matrix
+- Remember, Jacobian for linear layer is transpose of weight matrix
+	- For each $W^{(i)} = U^{(i)} \Lambda^{(i)} V^{(i)}$
+		- We break down the weight matrix using singular value decomposition
+		- Then we set $\Lambda^{(i)}$ to identity matrix, which makes it disappear, leaving us with
+			- $W^{(i)} \leftarrow U^{(i)} V^{(i)}$
+	- As code
+		- ![[Pasted image 20250404162018.png]]
+		- **NOTE:** We choose either $U$ or $V$, because if the matrix is non-square, then only either $U$ or $V$ will have the correct dimension
+			- Both $U$ and $V$ are still good to use because they are orthonormal (no scaling, only rotate)
+## Gradient clipping
+- ![[Pasted image 20250404162318.png]]
+- Took a step that was too big in wrong place
+- Something got divided by a small number (**ex.** in batch norm, softmax)
+- Just got really unlucky
+- Usually end up with positive feedback loop
+	- Bigger gradient gets bigger
+## Clipping the monster gradients
+- Per-element clipping
+	- $\bar{g}_{i} \leftarrow \max(\min(g_{i}, c_{i}), -c_{i})$
+	- Clip each entry in the gradient no larger than constant $c$
+- Norm clipping
+	- Maintains direction, but clips magnitude
+	- $\hat{g}_{i} \leftarrow g \dfrac{\min(\lVert g \rVert, c)}{\lVert g \rVert}$
+- How to choose $c$?
+	- Run a few epochs (assuming it doesn't explode)
+	- See what "healthy" magnitudes look like
+# Ensembles & dropout
+- What if my model makes a mistake?
+- Problem -> neural networks have many parameters, often have high variance
+	- Not nearly as high as we would expect from basic learning theory
+	- Overfitting is usually **not** catastrophic, but still...
+- Interesting idea -> If we have multiple high-variance learnings, maybe they'll agree on the right answer, but disagree on the wrong answer
+	- Many more ways to be wrong than to be right
+	- The average outputs of model might be a pretty good solution
+		- ![[Pasted image 20250404165115.png]]
+## Ensembles in theory
+- $\text{Variance} = \mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})} [\lVert f_{\mathcal{D}}(x) - \bar{f}(x) \rVert^2]$
+	- $\bar{f}(x) = \mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})}[f_{\mathcal{D}}(x)] \approx \dfrac{1}{M} \sum_{i = 1}^{M} f_{\mathcal{D}_{j}}(x)$
+	- Can we estimate $\bar{f}(x)$?
+- Can we cook up multiple independent datasets from a single one?
+- Simple approach
+	- Just chop big dataset into $M$ non-overlapping parts
+	- Wasteful, because training models on significantly less data
+- We don't need $M$ datasets to be non-overlapping
+	- Chop big dataset into $M$ overlapping but independently sampled parts
+	- ![[Pasted image 20250404165609.png]]
+	- This is called **resampling with replacement**
+		- Some data points get selected multiple times
+- ![[Pasted image 20250404170245.png]]
+- Train separate model on each $\mathcal{D}_{j}$
+	- $p_{\theta_{1}}(y \mid x), \dots, p_{\theta_{M}}(y \mid x)$
+	- Principled approach -> average probability
+		- $\huge p(y \mid x) = \dfrac{1}{M} \sum_{j = 1}^M p_{\theta}(y | x)$
+		- If all models disagree on first option, but agree on the second option, then second option would end up having a higher average probability
+	- Simple approach -> majority vote
+		- Drawback -> Class that network thinks is most likely might be wrong
+# Ensembles in practice
+- There is already a lot of randomness in neural network training
+	- Random initialization
+	- Random minibatch shuffling
+		- Order which we fetch minibatch
+	- Stochastic gradient descent
+		- Randomly samples minibatch
+- In practice, we get much of same benefit without resampling
+	- Train $M$ models $p_{\theta_{j}}(y \mid x)$ on the same $\mathcal{D}$
+	- Then use average or majority vote
+## Even faster ensembles
+- Assume most intermediate layers represent features (somewhat task-agonistic)
+	- These are most expensive part to train
+- Fully connected layers are task specific classification layers
+	- ![[Pasted image 20250404171007.png]]
+- Only retrain the fully connected layers, but have them share a "trunk" of layers
+- Separate ensemble of classifier "heads"
+## Even fasterer ensembles
+- Paper -> Train 1, get M for free
+- Snapshot ensembles
+	- Save out parameter snapshots over course of SGD optimization, use each snapshot as model in the ensemble
+	- ![[Pasted image 20250404171113.png]]
+	- Learning rate decreases, then we save snapshot, then we increase learning rate again
+		- Advantage -> don't need to have a bunch of separate training runs
+		- Need to set things up carefully so that snapshots are actually different
+	- Combining predictions
+		- Average probabilities or vote
+		- Also can **average parameter vectors** together
+## Some comparisons
+- ![[Pasted image 20250404171255.png]]
+- Your mileage may vary
+## Really really big ensembles?
+- Bigger ensemble is, the better it works (usually)
+- Making huge ensembles is expensive
+- Can we make multiple models out of a single neural network?
+- **Dropout**
+	- Randomly select some activations to zero in the forward pass
+	- ![[Pasted image 20250404171547.png]]
+	- This constructs a "new" network using the old network
+- Implementation
+	- for each $a_{j}^{(i)}$ set it to $a_{j}^{(i)}m_{ij}$
+	- $m_{ij} \sim \text{Bernoulli}(0.5)$
+		- 1.0 probability 50%
+		- 0.0 otherwise
+- ![[Pasted image 20250404171728.png]]
+	- Random mask -> matrix of numbers that are either 1 or 0
+	- Effectively deletes some of the activations
+- Forces network to have redundant representation
+	- ![[Pasted image 20250404171902.png]]
+	- Must build a variety of features
+- How could this possibly work?
+	- Every dropout mask as defining 
+	- Looks like a huge ensemble
+	- How huge?
+		- Assuming $k$ layers and $m$ activations per layer,
+		- We have $2^{km}$ possibilities!
+## At test time
+- During training
+	- for each $a_{j}^{(i)}$ set it to $a_{j}^{(i)}m_{ij}$
+	- $m_{ij} \sim \text{Bernoulli}(0.5)$
+- At test time
+	- Want to combine models
+	- Could just generate many dropout masks
+	- What if we stop dropping out at test time?
+- Before: we do dropout, on average $\frac{1}{2}$ dimensions are forced to $0$
+- Now: we don't do dropout, no dimensions are forced to zero, so $W^{(i)}a^{(i)}$ are $\approx 2 \times$ bigger
+- Solution -> $\hat{W}^{(i)} = \frac{1}{2} W^{(i)}$
+	- Note that we divide the weights by half to compensate for the fact that the network has about twice as many activations
+- ![[Pasted image 20250404172530.png]]
+	- In the code above, Andrej doesn't divide weights by 2 at test time, but instead multiplies weights by 2 at training time
+		- `weights / p = weights / 0.5 = weights * 2`
+## Hyperparameters
+- With all these tricks, we have a lot of hyperparameters
+- Some of these affect optimization (training)
+	- Learning rate
+	- Momentum
+	- Initialization
+	- Batch normalization
+- Some of these affect generalization (validation)
+	- Ensembling
+	- Dropout
+	- Architecture (# and size of layers)
+- How do we pick these?
+	- Recognize which is which, this can really matter!
+		- Bad learning rate, momentum, initialization, etc. show up **very early** in the training process
+		- Effect of architecture is usually only apparent after training is done
+	- Coarse to fine -> start with broad sweep, then zero in
+		-  ![[Pasted image 20250404173238.png]]
+		- **Ex.** Start with a short epoch training time to identify good learning rate parameters
+			- Using log space for learning rates gives us a bigger range without forcing us to try out a huge number of fixed interval rates
+		- ![[Pasted image 20250404173522.png]]
+	- Consider random hyperparameter search instead of grid
+		- ![[Pasted image 20250404173634.png]]
+		- More efficient
