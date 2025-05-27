@@ -13,6 +13,7 @@
 ## How do we specify what we want?
 - ![[Pasted image 20250405133423.png]]
 - Which action is better or worse?
+- $\pi_{\theta}(a_{t} | s_{t})$ is a policy
 - $r(s, a)$ -> reward function
 	- Scores every state or every state + action pair
 	- Tells us which states and actions are better
@@ -60,20 +61,27 @@
 	- ![[Pasted image 20250405134247.png]]
 ## Goal of reinforcement learning
 - ![[Pasted image 20250405135229.png]]
-- Creates a distribution over the sequences of states and actions
+- Policy -> $\pi_{\theta}(a \mid s)$
+	- Probability of $s
+- Our policy $\pi_{\theta}(a | s)$ creates a distribution over the sequences of states and actions
 	- $$\Huge \underbrace{ p_{\theta}(s_{1}, a_{1}, \dots, s_{T}, a_{T}) }_{ p_{\theta}(\tau) } = p(s_{1}) \prod_{t = 1}^T \underbrace{ \pi_{\theta}(a_{t} \mid s_{t}) p(s_{t + 1} \mid s_{t}, a_{t}) }_{ \text{Markov chain on } (s, a) }$$
 	- $\tau =$ "trajectory"
+	- $s_{t}, a_{t} =$ individual state + action at a step $t$ within a specific trajectory
+	- $p_{\theta}(s_{1}, a_{1}, \dots, s_{T}, a_{T}) =$ probability of a getting a sequence or "trajectory" of states and actions
 - Objective of reinforcement learning
 	- $$\huge \theta^* = \arg \underset{ \theta }{ \max } \mathbb{E}_{\tau \sim p_{\theta}(\tau)}\left[ \sum_{t} r(s_{t}, a_{t}) \right]$$
 	- We want to choose parameters $\theta$ that maximize the expected value of the total rewards over all trajectories $\tau$
+		- The trajectories are sampled from the possible distributions of trajectories that the policy creates
 # Wall of math time (policy gradients)
 ## Evaluating the objective
 - $$\huge \theta^* = \arg \underset{ \theta }{ \max } \underbrace{ \mathbb{E}_{\tau \sim p_{\theta}(\tau)}\left[ \sum_{t} r(s_{t}, a_{t}) \right] }_{ J(\theta) }$$
 - How can we estimate the expected value of future rewards?
 - $$\huge \frac{1}{N} \sum_{i} \sum_{t} r(s_{i,t}, a_{i, t})$$
+	- We can calculate the expectation by sampling $N$ samples, and then using the formula above (see definition of expected value)
+		- This creates an "unbiased estimator" of the expected value
 - $$\huge J(\theta) = \mathbb{E}_{\tau \sim p_{\theta}(\tau)} \left[  \sum_{t} r(s_{t}, a_{t})  \right] \approx \frac{1}{N} \sum_{i} \sum_{t} r(s_{i, t}, a_{i, t})$$
 	- We can approximate the expected value by summing over samples from $\pi_{\theta}$
-	- This means running the 
+	- This means running the policy multiple times and collecting data on each trajectory 
 		- ![[Pasted image 20250405140738.png]]
 ## Direct policy differentiation
 - $$\huge \theta^* = \arg \underset{ \theta }{ \max } \underbrace{ \mathbb{E}_{\tau \sim p_{\theta}(\tau)}\left[ \sum_{t} r(s_{t}, a_{t}) \right] }_{ J(\theta) }$$
@@ -81,9 +89,14 @@
 	- **NOTE:** $p_{\theta}(\tau) = \pi_{\theta}(\tau)$
 	- $$\huge J(\theta) = \mathbb{E}_{\tau \sim \pi_{\theta}(\tau)}[r(\tau)] = \int \pi_{\theta}(\tau) r(\tau) d\tau$$
 		- $r(\tau) = \sum_{t = 1}^T r(s_{t}, a_{t})$
+			- We can rewrite the reward over trajectories as $r(\tau)$
+		- The expected value is just integral over all probabilities times the reward from that probability
+			- Think of this as summing over the rewards of each trajectory weighted by that trajectory's likelihood
+				- This is just definition of expected value!
 - A convenient identity
 	- $$\huge \pi_{\theta}(\tau) \nabla_{\theta} \log \pi_{\theta}(\tau) = \pi_{\theta}(\tau) \frac{\nabla_{\theta} \pi_{\theta}(\tau)}{\pi_{\theta}(\tau)} = \nabla_{\theta} \pi_{\theta}(\tau)$$
-- Evaluating the derivative
-- $$\large \begin{align}
-\nabla_{\theta} J(\theta) = \int \nabla_{\theta} \pi_{\theta}(\tau) r(\tau) d\tau = \int \underbrace{ \pi_{\theta}(\tau) \nabla_{\theta} \log \pi_{\theta}(\tau) }_{ \text{from identity} } r(\tau) d\tau  = \mathbb{E}_{\tau \sim \pi_{\theta}(\tau)}[\nabla_{\theta} \log \pi_{\theta}(\tau)]
-\end{align}$$
+- Evaluating the derivative of the expected value, with respect to the parameters $\theta$
+	- $$\large \begin{align}
+	\nabla_{\theta} J(\theta) = \int \nabla_{\theta} \pi_{\theta}(\tau) r(\tau) d\tau = \int \underbrace{ \pi_{\theta}(\tau) \nabla_{\theta} \log \pi_{\theta}(\tau) }_{ \text{from identity} } r(\tau) d\tau  = \mathbb{E}_{\tau \sim \pi_{\theta}(\tau)}[\nabla_{\theta} \log \pi_{\theta}(\tau)]
+	\end{align}$$
+- 

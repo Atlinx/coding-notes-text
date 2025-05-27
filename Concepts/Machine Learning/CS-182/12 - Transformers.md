@@ -140,7 +140,7 @@
 		-\infty &\text{otherwise} 
 		\end{cases}$$
 	- If the $k_{t}$ comes from a timestep before $q_{l}$, then we allow it
-	- `softmax will set to 0 when $e_{l,t} = -\infty$
+	- `softmax` will set to 0 when $e_{l,t} = -\infty$
 ## Implementation summary
 - We can implement a practical sequence model based entirely on self-attention
 - Alternate self-attention "layers" with nonlinear position-wise feedforward networks (to get nonlinear transformations)

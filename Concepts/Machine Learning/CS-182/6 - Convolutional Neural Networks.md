@@ -19,7 +19,7 @@
 	- "mini-layer" -> **filter**
 		- ![[Pasted image 20250404114500.png]]
 		- A $3 \times 3 \times 3$ box that we slide over the image and output local features 
-			- This contains different weights that we tweeak
+			- This contains different weights that we tweak
 			- **NOTE:** There are 3 color channels, and the box is 3 x 3
 		- We can stack together filters to change the depth of our output size
 		- What do the "features" look like?
@@ -32,9 +32,11 @@
 		- ![[Pasted image 20250404114811.png]]
 		- Take max for each channel in non-overlapping regions
 			- Essentially down sampling
-		- We only care about the most "important" features in the region
+		- We only care about the most "important" feat8ures in the region
 	- ![[Pasted image 20250404115022.png]]
 		- Builds a smaller output
+		- Repeatedly take a window of 2 x 2, and keep the largest output of the window
+			- Note that we have a depth of 4, so for each 2 x 2 window we do this at each depth from 1 to 4.
 - We can chain convolutions + max poolings
 	- Size of pooling can change, number of filters can change
 	- ![[Pasted image 20250404115142.png]]

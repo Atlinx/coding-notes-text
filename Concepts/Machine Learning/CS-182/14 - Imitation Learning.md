@@ -38,8 +38,11 @@
 	- Observations
 	- This is our input
 	- Used to be $x$
-- $\pi_{\theta}(a_{t} \mid o_{t})$
+- $\pi_{\theta}(a_{t} \mid o_{t})$ ^policy
 	- Used to be $p_{\theta}(y \mid x)$
+	- This is a "policy"
+	- Takes a state as input, and outputs a distribution of actions (Probability of each action)
+		- It outputs the probability of action $a_{t}$ given state $s_{t}$
 - $a$
 	- Action
 	- What we predict

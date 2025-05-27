@@ -133,7 +133,7 @@
 	- Axon transmits signal to downstream neurons
 - ![[Pasted image 20250404000824.png]]
 	- Artificial "neuron" sums up signals from upstream neurons (also referred to as "units)
-	- $$z = \sum_{i} a_{i}$$
+	- $$\huge z = \sum_{i} a_{i}$$
 		- $a_{i} =$ upstream activations
 		- Neuron "decides" how much to fire based on incoming signals
 			- $a = \sigma(z)$
