@@ -1,0 +1,91 @@
+# State of Robot Motion Generation
+https://arxiv.org/pdf/2410.12172
+- Generating robot motion
+	- Traditionally used explicit models
+		- Using analytical expressions for world geometry and dynamics
+		- Explainable numerical approximations of dynamics, in the form of a simulator
+	- New field of implicit models
+		- learn implicit representations of the world task and store them as internal parameters of a machine learning model 
+## Explicit models
+![[Pasted image 20250703141610.png]]
+- Motion planning
+	- Generate safe paths to a goal given observations
+- Task and motion planning
+	- Like motion planning but for sequencing multiple goals together (generating a series of safe paths)
+	- The trajectories can be executed by an open loop system if the underlying model of the task/world is accurate enough
+	- **DEFINE:** Open loop system
+		- System that directly executes inputs
+		- **Ex.** Robot executing series of fixed instructions
+	- **DEFINE:** Closed loop system
+		- System that executes input, and then incorporates feedback
+		- **Ex.** Robot executing a step, then collecting observations, and then deciding on the next step
+- Belief state planning
+	- AKA planning under uncertainty
+	- Goal is to compute robust policies to disturbances that can be modelled
+- Control-and-feedback planning
+	- Integrates perception + motion generation so robot dynamically reacts to deviations from desired behavior given observations
+### Motion Planning
+- Goal is to find a path with minimal cost (shortest path or fastest trajectory) that brings a robot to a desired goal state without collisions, given fully-observable world model
+- Search-based Approaches
+	- Uniform cost search (UCS) + Dijkstra's algorithm
+		- Compute optimal path over discrete representation of state space (ex. grid or graph), given a cost function
+		- Cost function tells us the cost to transition from one state to another
+	- A*
+		- Uses a heuristic to inform search
+	- Drawbacks of search-based approaches -> Suffers from curse of dimensionality
+		- Possible states to be a explored grows exponentially with more dimensions
+		- Infeasible for many robotics problems given naïve discretizations
+- Sampling-based Motion Planners (SBMPs)
+	- These methods provide graph-based representations for searching the collision-free subset of a robot's state space in a more scalable manner than grids
+	- Probabilistic Roadmap Method (PRM)
+		- Samples collision-free configurations (set of robot joint positions) as nodes of a roadmap
+		- Collision-free local paths define the edges
+		- **TODO:** What exactly is a roadmap?
+	- Rapidly Exploring Random Tree (RRT)
+		- [[Random Trees]]
+		- Generates tree structure rooted at robot's start state
+		- Explores free state space until it's close to the goal
+			- Does not require "steering function" (the ability to perfectly connect two robot states)
+				- **TODO:** What does it mean to connect two robot states?
+					- What are examples of situations that don't have steering functions?
+	- PRM and RRT are provably suboptimal
+		- Asymptotically optimal variants (PRM* and RRT*) guarantee discovered paths converge to optimal ones as sampling progresses
+			- **TODO:** What does "sampling" here mean? What is each individual sample? Is it a trajectory?
+	- Applications of SBMP
+		- Autonomous driving + manipulation
+		- Open Motion Planning Library (OMPL) has implementations
+- Optimization-based approaches
+	- Instead of searching entire state space, we can utilize gradient information to locally optimize our paths
+	- Optimization-based approaches locally optimize paths given an objective function under physical or operational limits
+	- Covariant Hamiltonian Optimization for Motion Planning (CHOMP)
+		- Iteratively optimizes paths by reducing collision and trajectory costs
+	- TrajOpt
+		- Uses sequence of convex optimization to progressively ensure each iteration produces feasible (satisfies all constraints) and collision-free trajectories
+		- **TODO:** What is convex optimization?
+	- k-Order Markov Optimization (KOMO)
+		- Treats trajectory optimization as **sparse nonlinear program**
+			- This is an optimization problem where objective function and/or constraints are nonlinear, and the solution is expected to have sparse representation -- only a few variables are non-zero
+		- Addresses higher-dimension problems by leveraging sparsity in dynamics and constraints
+		- **TODO:** What is the actual KOMO algorithm?
+	- Factor graphs
+		- Graphical optimization tool for state estimation and least squares optimization can be used for trajectory optimization
+		- **TODO:** What exactly are factor graphs, and how is it used for state estimation?
+	- Graph of Convex Sets
+		- Combines optimization and SBMPs
+		- Builds
+	- Machine Learning (ML) for Planning
+		- Using ML to improve computational efficiency of planning
+			- Ex, effective sampling, avoiding collisions, distance metrics
+		- ML can determine which combination of methods is best suited for a specific problem
+		- Neural Motion Planning (NMP)
+			- Approximates a planner's operation
+			- Typically uses data from a simulator
+			- Encoder processes environment data like point clouds
+				- Creates a latent space representation -- a lower dimensional representation that's fed into the neural network
+			- Neural network predicts robot's next configuration based on current state, goal state, and encoded environment
+	- Task and Motion Planning (TAMP)
+		- TAMP methods aim to address long-horizon multi-step robotic tasks
+			- **Ex.** moving through sequence of goals or manipulating the environment
+			- Define low level
+## Implicit models
+- 

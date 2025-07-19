@@ -207,8 +207,8 @@ x_{1} &-2x_{2} &+x_{3} &= 0 \\
 	- ![[Pasted image 20250329111740.png]]
 - **DEFINE:** Pivot
 	- A nonzero number in a pivot position that is used to created zeroes below itself using row operations
-## The Row Reduction Algorithm
-- **DEFINE:** Row reduction algorithm
+## The Row Reduction Algorithm (Gaussian Elimination)
+- **DEFINE:** Row reduction algorithm (Gaussian Elimination)
 	- Takes a matrix and converts it into an echelon form
 	- The fifth step produces a matrix in reduced echelon form
 	- Steps

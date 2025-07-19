@@ -148,3 +148,4 @@
 - Training details
 	- For each cell, the object it should predict is the object with the highest IoU with the box from all of its 
 - See the [YOLO paper](https://arxiv.org/pdf/1506.02640) for more information
+- **TODO:** Finish computer vision lectures as needed

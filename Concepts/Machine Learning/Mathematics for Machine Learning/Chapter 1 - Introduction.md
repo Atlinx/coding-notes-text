@@ -1,0 +1,50 @@
+# 1 Introduction
+- Core of machine learning
+	- Data
+	- Model
+		- **Ex.** In regression, the model is a function that maps inputs to real-valued output
+	- Learning
+		- Automatically finding patterns and structures in data by optimizing parameters of the model
+		- A model "learns" from data if it's performance on a task improves after data is taken into account
+## 1.1 Finding Words for Intuitions
+- **DEFINE:** Predictor
+	- System that makes predictions based on input data
+- **DEFINE:** Training
+	- System that modifies internal parameters of a predictor so it performs well on future unseen input data
+- Core of machine learning
+	- Data is treated as vectors
+		- Array of numbers -> computer science
+		- Arrow with a direction and magnitude -> physics
+		- Object that obeys addition and scaling -> mathematical
+	- Model
+		- Process for generating data
+		- Can predict what would happen in the real world without performing real-world experiments
+	- Learning
+		- Training the model -> Use data to optimize some parameters of a model with respect to a utility function
+		- Utility function evaluates how well model predicts the training data
+		- "Climbing a hill to reach its peak"
+			- Reaching the maximum of some desired performance
+		- Model should perform well on unseen data
+			- Sometimes, it might not generalize well to unseen data
+## 1.2 Two Ways to Read This Book
+- Can read the book
+	- Bottom-up -> Build mathematical foundations, and then learn about ML algorithms
+	- Top-down -> Drill down into mathematical details from ML algorithms
+- Four pillars of machine learning
+	- Regression
+	- Dimensionality reduction
+	- Density estimation
+	- Classification
+- Structure of book
+	- Part 1 -- Math for machine learning
+		- Linear algebra -> Study of vectors
+		- Analytic geometry -> Classification of similarity and distances
+		- Matrix decomposition -> Specific matrix operations useful in ML
+		- Probability theory -> Quantification of uncertainty
+		- Vector calculus -> Gradients
+		- Optimization -> Finding maxima/minima of functions
+	- Part 2 -> Machine learning
+		- Linear regression -> Find inputs that map $x \in \mathbb{R}^D$ to observed function values $y \in \mathbb{R}$ which we can interpret as labels of inputs
+		- Dimensionality reduction -> Find lower-dimensional representation of high-dimensional data
+		- Density estimation -> Find probability distribution that describes a given dataset
+		- Classification
