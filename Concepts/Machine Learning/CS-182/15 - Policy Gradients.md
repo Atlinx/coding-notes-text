@@ -249,12 +249,12 @@ $$\huge \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i = 1}^N \nabla_{\th
 - Neural networks change only a little bit with each gradient step
 - Each step we must resample from the policy, since the policy — and it's trajectory distribution — have changed
 - On-policy learning can be extremely inefficient
-## Off-policy learning & importance sampling
+## Off-policy learning & importance sampling (IS)
 - $\theta^* = \arg \underset{ \theta }{ \max } J(\theta)$
 - $J(\theta) = \mathbb{E}_{\tau \sim \pi_{\theta}(\tau)} [ r(\tau)]$
 - Importance sampling
 	- Estimating expected value of a function under a distribution, given only samples from a different distribution
-	- $$\begin{align}
+	- $$\huge \begin{align}
 	\mathbb{E}_{x \sim p(x)}[f(x)] &= \int p(x) f(x) \; dx \\
 	&= \int \frac{q(x)}{q(x)} p(x) f(x) \; dx \\
 	&= \int q(x) \frac{p(x)}{q(x)} f(x) \; dx \\
@@ -263,6 +263,92 @@ $$\huge \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i = 1}^N \nabla_{\th
 	- $\displaystyle\frac{p(x)}{q(s)}$ is known as the "importance weight"
 - What if we don't have samples from $\pi_{\theta}(\tau)$
 	- We have samples from $\bar{\pi}(\tau)$ instead
-	- $\displaystyle J(\theta) = \mathbb{E}_{\tau \sim \bar{\pi} (\tau)} \left[\frac{\pi_{\theta}(\tau)}{\bar{\pi}(\tau)} r(\tau)\right]$
+	- $\large \displaystyle J(\theta) = \mathbb{E}_{\tau \sim \bar{\pi} (\tau)} \left[\frac{\pi_{\theta}(\tau)}{\bar{\pi}(\tau)} r(\tau)\right]$
 	- Recall that
-		- $\displaystyle \pi_{\theta}(\tau) = p(s_{1}) \prod_{t=1}^T \pi_{\theta}(a_{t} \mid s_{t})$
+		- $\large \displaystyle \pi_{\theta}(\tau) = p(s_{1}) \prod_{t=1}^T \pi_{\theta}(a_{t} \mid s_{t})p(s_{t+1} \mid s_{t}, a_{t})$
+	- Therefore,
+		- $$\huge \begin{align}
+		\frac{\pi_{\theta}(\tau)}{\bar{\pi}(\tau)} &= \frac{\cancel{p(s_{1})} \prod_{t=1}^T \pi_{\theta}(a_{t} \mid s_{t}) \cancel{p(s_{t+1} \mid s_{t}, a_{t})}}{\cancel{p(s_{1})} \prod_{t=1}^T \bar{\pi}(a_{t} \mid s_{t}) \cancel{p(s_{t+1} \mid s_{t}, a_{t})}} \\
+		&= \frac{\prod_{t =1}^T \pi_{\theta}(a_{t} \mid s_{t})}{\prod_{t = 1}^T \bar{\pi}(a_{t} \mid s_{t})} \\
+		&= \prod_{t = 1}^T \frac{\pi_{\theta}(a_{t} \mid s_{t})}{\bar{\pi}(a_{t} \mid s_{t})}
+		\end{align}$$
+## Deriving the policy gradient with IS
+- Can we estimate the value of some new parameters $\theta'$ 
+- $$\huge \begin{align}
+	J(\theta') &= \mathbb{E}_{\tau \sim \pi_{\theta} (\tau)} \left[\frac{\pi_{\theta'}(\tau)}{\pi_{\theta}(\tau)} r(\tau)\right] \\ \\
+	\nabla_{\theta} J(\theta') &= \mathbb{E}_{\tau \sim \bar{\pi} (\tau)} \left[\frac{\nabla_{\theta'} \pi_{\theta'}(\tau)}{\pi_{\theta}(\tau)} r(\tau)\right] \\
+	&= \mathbb{E}_{\tau \sim \pi_{\theta}(\tau)} \left[ \frac{\pi_{\theta'}(\tau)}{\pi_{\theta}(\tau)} \nabla_{\theta'} \log \pi_{\theta}(\tau) r(\tau) \right]
+	\end{align}$$
+	- If $\theta = \theta'$, then the fraction cancels out and we get the original vanilla policy gradient
+## The off-policy gradient
+![[Pasted image 20250719191930.png]]
+- To factor in causality
+	- We can split the importance sampling weights in half, with one product starting from $1 \to t$ and the other product starting from $t \to T$.
+	- We can then ignore the importance sampling weights from $t \to T$, since future actions don't affect the current weight
+- Problem -> This current formulation of importance sampling involves multiplying many probabilities together from $t' = 1 \to t$
+	- This can lead to the number converging toward zero or infinity, which makes it difficult to work with
+## A first-order approximation for IS (preview)
+![[Pasted image 20250719192056.png]]
+- To address the issue of repeated multiplications, we can formulate the objective function as an expectation over "state action marginals"
+	- That is, we use the importance weights for each state action pair in isolation, rather than use importance weights for entire trajectories
+- We can then expand this formulation from $\pi_{\theta}(s, a) = \pi_{\theta}(s) \pi_{\theta}(a \mid s)$
+	- We can ignore the $\pi_{\theta}(s)$ part, since if $\pi_{\theta}$ and $\pi_{\theta'}$ are very similar, this fraction is approximately 1
+		- Eliminating this fraction is good because we can't actually calculate the probability of getting a specific state from the policy 
+	- This simplification makes our equation no longer an unbiased estimator of the true expected value
+## Policy gradient with automatic differentiation
+- Our policy gradient
+	- $$\huge \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i = 1}^N \sum_{t = 1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i,t} \mid s_{i,t}) \hat{Q}_{i,t}$$
+	- 
+- How can we compute policy gradients with automatic differentiation?
+	- Maximum likelihood
+		- $$\huge \begin{align} \\
+J_{\text{ML}}(\theta) &\approx \frac{1}{N} \sum_{i = 1}^N \sum_{t = 1}^T \log \pi_{\theta}(a_{i,t} \mid s_{i,t}) \\
+\nabla_{\theta}J_{\text{ML}}(\theta) &\approx \frac{1}{N} \sum_{i = 1}^N \sum_{t = 1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i,t} \mid s_{i,t})
+\end{align}$$
+- Need a graph such that its gradient is the policy gradient
+- Implement a "pseudo-loss" as a weighted maximum likelihood
+	- $$\huge \begin{align}
+\hat{J}(\theta) &\approx \frac{1}{N} \sum_{i = 1}^N \sum_{t=1}^T \log \pi_{\theta}(a_{i,t} \mid s_{i,t}) \hat{Q}_{i,t} \\
+\nabla_{\theta} \hat{J}(\theta) &\approx \frac{1}{N} \sum_{i = 1}^N \sum_{t=1}^T \nabla_{\theta} \log  \pi_{\theta}(a_{i,t} \mid s_{i,t}) \hat{Q}_{i,t}
+\end{align}$$
+- Example code
+	- ![[Pasted image 20250719195439.png]]
+	- ![[Pasted image 20250719195450.png]]
+		- We can just multiply the negative likelihoods by the q-values before we average them and then calculate the gradient/
+## Policy gradient in practice
+- Policy gradient has high variance
+	- This isn't the same as supervised learning
+	- Gradients will be really noisy
+- Consider using much larger batches
+- Tweaking learning rates is very hard
+	- Adaptive step size rules like ADAM are important
+## What are policy gradients used for?
+- Learning for control
+- **Ex.** Clipping a part of an image to pay attention to
+	- Cropping out a part of the image is discrete, therefore it cannot be differentiated
+- Discrete latent variable models
+- REINFORCE can be used where we have to differentiate through a stochastic but non-differentiable operation
+## Review
+- Evaluating RL objective
+- Evaluating the policy gradient
+	- Log-gradient trick
+	- Generate samples
+- Policy gradient is on-policy
+- Can derive off-policy variant
+	- Use importance sampling
+	- Exponential scaling in T
+	- Can ignore state portion (approximation)
+- Can implement with automatic differentiation
+- Practical considerations -> batch size, learning rates, optimizers
+## Example: Trust region policy optimization
+- Natural gradient with automatic step adjustment
+- Discrete and continuous actions
+## Policy gradients suggested readings
+- Classic papers
+	- Williams (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning: introduces REINFORCE algorithm
+	-  Baxter & Bartlett (2001). Infinite-horizon policy-gradient estimation: temporally decomposed policy gradient (not the first paper on this! see actor-critic section later)
+	- Peters & Schaal (2008). Reinforcement learning of motor skills with policy gradients: very accessible overview of optimal baselines and natural gradient
+- Deep reinforcement learning policy gradient papers
+	- Levine & Koltun (2013). Guided policy search: deep RL with importance sampled policy gradient (unrelated to later discussion of guided policy search)
+	- Schulman, L., Moritz, Jordan, Abbeel (2015). Trust region policy optimization: deep RL with natural policy gradient and adaptive step size
+	- Schulman, Wolski, Dhariwal, Radford, Klimov (2017). Proximal policy optimization algorithms: deep RL with importance sampled policy gradient
