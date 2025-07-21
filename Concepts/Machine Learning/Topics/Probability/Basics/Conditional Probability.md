@@ -1,0 +1,11 @@
+# Conditional Probability
+- The probability of an event occurring given that another events has already occurred
+	- **Ex.** Probability that someone has the flu given that they have a fever.
+- $P(A \mid B)$
+	- Probability of event $A$ given event $B$ has occurred
+	- We say $A$ is "conditioned on" $B$
+	- If there are multiple conditioned on events, it's written as
+		- $P(A \mid B, C)$
+			- Probability of event $A$ given event $B$ and $C$ have occurred
+- We can use the [[#^chain-rule|chain rule]] to define conditional probability
+	- $$\large P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$

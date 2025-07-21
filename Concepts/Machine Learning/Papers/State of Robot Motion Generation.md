@@ -5,7 +5,7 @@ https://arxiv.org/pdf/2410.12172
 		- Using analytical expressions for world geometry and dynamics
 		- Explainable numerical approximations of dynamics, in the form of a simulator
 	- New field of implicit models
-		- learn implicit representations of the world task and store them as internal parameters of a machine learning model 
+		- Learn implicit representations of the world task and store them as internal parameters of a machine learning model 
 ## Explicit models
 ![[Pasted image 20250703141610.png]]
 - Motion planning
@@ -38,19 +38,20 @@ https://arxiv.org/pdf/2410.12172
 - Sampling-based Motion Planners (SBMPs)
 	- These methods provide graph-based representations for searching the collision-free subset of a robot's state space in a more scalable manner than grids
 	- Probabilistic Roadmap Method (PRM)
+		- [[PRM]]
 		- Samples collision-free configurations (set of robot joint positions) as nodes of a roadmap
 		- Collision-free local paths define the edges
-		- **TODO:** What exactly is a roadmap?
+		- **LEARN:** What exactly is a roadmap?
 	- Rapidly Exploring Random Tree (RRT)
 		- [[Random Trees]]
 		- Generates tree structure rooted at robot's start state
 		- Explores free state space until it's close to the goal
 			- Does not require "steering function" (the ability to perfectly connect two robot states)
-				- **TODO:** What does it mean to connect two robot states?
+				- **LEARN:** What does it mean to connect two robot states?
 					- What are examples of situations that don't have steering functions?
 	- PRM and RRT are provably suboptimal
 		- Asymptotically optimal variants (PRM* and RRT*) guarantee discovered paths converge to optimal ones as sampling progresses
-			- **TODO:** What does "sampling" here mean? What is each individual sample? Is it a trajectory?
+			- **LEARN:** What does "sampling" here mean? What is each individual sample? Is it a trajectory?
 	- Applications of SBMP
 		- Autonomous driving + manipulation
 		- Open Motion Planning Library (OMPL) has implementations
@@ -61,15 +62,15 @@ https://arxiv.org/pdf/2410.12172
 		- Iteratively optimizes paths by reducing collision and trajectory costs
 	- TrajOpt
 		- Uses sequence of convex optimization to progressively ensure each iteration produces feasible (satisfies all constraints) and collision-free trajectories
-		- **TODO:** What is convex optimization?
+		- **LEARN:** What is convex optimization?
 	- k-Order Markov Optimization (KOMO)
 		- Treats trajectory optimization as **sparse nonlinear program**
 			- This is an optimization problem where objective function and/or constraints are nonlinear, and the solution is expected to have sparse representation -- only a few variables are non-zero
 		- Addresses higher-dimension problems by leveraging sparsity in dynamics and constraints
-		- **TODO:** What is the actual KOMO algorithm?
+		- **LEARN:** What is the actual KOMO algorithm?
 	- Factor graphs
 		- Graphical optimization tool for state estimation and least squares optimization can be used for trajectory optimization
-		- **TODO:** What exactly are factor graphs, and how is it used for state estimation?
+		- **LEARN:** What exactly are factor graphs, and how is it used for state estimation?
 	- Graph of Convex Sets
 		- Combines optimization and SBMPs
 		- Builds
@@ -83,9 +84,95 @@ https://arxiv.org/pdf/2410.12172
 			- Encoder processes environment data like point clouds
 				- Creates a latent space representation -- a lower dimensional representation that's fed into the neural network
 			- Neural network predicts robot's next configuration based on current state, goal state, and encoded environment
-	- Task and Motion Planning (TAMP)
-		- TAMP methods aim to address long-horizon multi-step robotic tasks
-			- **Ex.** moving through sequence of goals or manipulating the environment
-			- Define low level
+- Task and Motion Planning (TAMP)
+	- TAMP methods aim to address long-horizon multi-step robotic tasks
+		- **Ex.** moving through sequence of goals or manipulating the environment
+		- Define low level operators and high-level logical relationships between operators
+	- Methods
+		- Sequencing first
+			- Defines plan skeleton first -- a sequence of operators without satisfying their preconditions
+			- Can result in frequent infeasible plans
+		- Satisfying first
+			- Solves low-level operators first
+			- Can result in wasted time creating useless satisfied operators
+		- Interleaved -> Checks both low-level information for feasibility during task planning
+	- **LEARN:** How does TAMP work?
+- Belief State Planning
+	- Methods of modelling uncertainty in the environment
+	- Partially Observable Markov Decision Processes (POMDP) [^1]
+		- Consists of set of states $S$, set of actions $A$, and set f transition probabilities between states $T(s_{t+1} \mid s_{t},a_{t})$
+		- Contains a distribution over states given a set of observations $O$
+	- Point-based value iteration
+	- Tree-search
+	- Policy search
+	- Heuristic
+	- **LEARN:** Learn more
+- Control and Feedback-based Planning
+	- Low-level controllers
+		- Proportional Integral Derivative (PID) control
+		- Path Tracking Controllers
+			- Dynamically controls robot during execution to minimize path deviation
+	- Potential functions and operational space control
+		- Potential functions -> Defines attractive fields toward the goal and repulsive ones away from obstacle
+			- Moving along negative gradient of sum of these fields provides motion vector
+			- In complex environments, there can be multiple minima
+		- Navigation functions -> Ensure single minimum at the goal, but only work for specific environments
+	- Operational space control [^2]
+		- Defines control in lower dimensional task spaces
+			- **Ex.** Moving the end-effector to a desired position and velocity, given the current position and velocity
+		- **LEARN:** Learn about multi-level hierarchical control, Jacobians, etc.
+	- Linearization and feedback-based planning
+		- **LEARN:** Learn more about control laws
+	- Model-predictive control (MPC) and replanning
+		- Executes motion and collects new observations
+		- Uses system's model to predict future behaviors to minimize cost function at end of finite horizon
+		- Linear MPC -> Analytical MPC for linear models
+		- Non-Linear MPC -> Non-linear variant of linear MPC
+		- Shooting MPC -> Numerical methods that guess initial set of controls and locally optimizing
+		- Replanning in general can reuse previous computations
+			- **Ex.** D* Lite, a replanning variant of A*
+			- **Ex.** Replanning versions of SBMPs
 ## Implicit models
+![[Pasted image 20250721114648.png]]
+- Learning from demonstrations
+	- Behavior cloning
+		- Gap between the demonstration and execution setups can cause compounding errors that causes a distributional shift
+			- Distributional shift -> The new data the model sees is no longer similar to the expert demonstrations, which causes the model to behave differently and
+		- Sensitive to engineering decisions
+	- Incremental corrections
+		- DAgger algorithm -> Focuses data collection on areas of uncertainty
+			- Steps
+				- BC policy collects dataset of trajectories
+				- Expert is queries to provide proper actions at the states in dataset
+				- Policy is retrained
+			- New out of distribution states will be discovered after each retraining
+		- SafetyDAgger algorithm
+			- Uses a safety policy to predict error of learning policy
+			- Safety policy selects a small subset of training examples to be collected and sent to the expert who provide proper demonstrations
+	- Inverse reinforcement learning (IRL)
+		- Extracting the underlying reward function given demonstrations
+		- Reward function can then be used to make a policy using MDP problem formulation
+		- Challenges in scaling to high-dimensional systems
+	- Diffusion policies
+		- Imitation learning demonstrations include multi-modal behaviors
+		- ML models trained using mean-squared error will average the demonstrated actions, resulting in invalid choices
+			- **Ex.** A drone flying through a forest encounters a tree, and must move left or right to avoid it.
+				- However, half of the demonstration data moved left, and half of the data moved right when encountering a tree.
+				- Therefore, the ML model averages these demonstrations and stays centered, which causes the drone to crash into the tree.
+		- Inference speed of diffusion policies tends to be slow
+- Reinforcement learning
+	- Model-free, on-policy RL
+		- Policy gradient
+			- Generates batch of trajectory data
+			- Computes a gradient at each state transition scaled by their future rewards
+		- Proximal policy optimization
+			- Policy gradient method
+	- Off-policy RL
+	- Simulation domain randomization
+- Cross-task leraning
+- Large models
 - 
+
+[^1]: https://pomdp.org/tutorial/mdp.html
+
+[^2]: https://irislab.tech/course_robotics/intro.html

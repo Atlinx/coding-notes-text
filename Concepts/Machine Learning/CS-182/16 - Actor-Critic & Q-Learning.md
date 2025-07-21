@@ -88,7 +88,15 @@ Q^\pi (s_{t}, a_{t}) &= \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}}[r(s_{t'}, a_{t'}
 		- $\huge \displaystyle L(\phi) = \frac{1}{2} \sum_{i} \left\lVert \hat{V}_{\phi}^\pi (s_{i} - y_{i}) \right\rVert^2$
 ## Can we do better?
 - Ideal target
-	- 
+	- $$\huge \begin{align}
+	y_{i,t} &= \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \mid s_{i,t}]  \\
+	&\approx r(s_{i,t}, a_{i,t}) + V^\pi(s_{i,t+1}) \\
+	&\approx r(s_{i,t}, a_{i,t}) + \hat{V}_{\phi}^\pi (s_{i,t+1}) \\
+	\end{align}$$
+	- Since the definition of the value is recursive, we can approximate it using our previously fitted value function $\hat{V}_{\phi}^\pi$
 - Monte Carlo target
 	- $\huge \displaystyle y_{i,t} = \sum_{t'=t}^Tr(s_{i,t'}, a_{i,t'})$
-- fdsdf
+- Training data
+	- $\huge \displaystyle \Big\{\Big( s_{i,t} \;, \; \underbrace{ r(s_{i,t'}, a_{i,t'}) + \hat{V}_{\phi}^\pi (s_{i,t+1}) }_{ \huge y_{i,t} } \Big)\Big\}$
+- Sometimes referred to as a "bootstrapped" estimate
+## Policy evaluation
